@@ -15,22 +15,22 @@
     background-color: #e8c500;
     color: black;
     text-align: center;
+    margin-top: 30px;
 }
 
 .card {
     margin-top: 30px;
+    border-color: #999999;
 }
 
 .img-hover-zoom {
-    overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+    overflow: hidden;
 }
 
-/* [2] Transition property for smooth transformation of images */
 .img-hover-zoom img {
     transition: transform .5s ease;
 }
 
-/* [3] Finally, transforming the image when container gets hovered */
 .img-hover-zoom:hover img {
     transform: scale(1.5);
 }
