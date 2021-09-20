@@ -32,7 +32,21 @@ public class Initializer implements ServletContextListener {
 
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
+        ProductCategory variants = new ProductCategory("Banana variants", "Basics", "Bananas in all shapes and sizes.");
+        ProductCategory specialOffers = new ProductCategory("Special Offers", "Basics", "Bananas for special needs.");
+        ProductCategory ingredients = new ProductCategory("Ingredients", "Food", "Banana is not just about the fruit, here you can find other parts that can be used in foods.");
+        ProductCategory cultivation = new ProductCategory("Cultivation", "Horticulture", "Wanna grow your own bananas? Look no further, here's what you need to start");
+        ProductCategory foods = new ProductCategory("Banana foods", "Food", "Wide selection of banana based dishes, desserts and sweets.");
+        ProductCategory merchandise = new ProductCategory("Merchandise", "Merchandise", "All kinds of banana-themed fun stuff from plushes to apparel.");
+        ProductCategory miscellaneous = new ProductCategory("Miscellaneous", "Miscellaneous", "Haven't found what you're looking for anywhere else? Try here!");
         productCategoryDataStore.add(tablet);
+        productCategoryDataStore.add(variants);
+        productCategoryDataStore.add(specialOffers);
+        productCategoryDataStore.add(ingredients);
+        productCategoryDataStore.add(cultivation);
+        productCategoryDataStore.add(foods);
+        productCategoryDataStore.add(merchandise);
+        productCategoryDataStore.add(miscellaneous);
 
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
