@@ -1,6 +1,7 @@
 .jumbotron {
     background-image: url("../img/banana_background.jpg") ;
     background-size: 105%;
+    box-shadow: 5px 5px 8px #999999;
     color: black;
     text-shadow: 0 0 3px white, 0 0 5px white;
     animation: backgroundScroll 15s linear infinite;
@@ -21,6 +22,7 @@
 .card {
     margin-top: 30px;
     border-color: #999999;
+    box-shadow: 5px 5px 8px #999999;
 }
 
 .img-hover-zoom {
