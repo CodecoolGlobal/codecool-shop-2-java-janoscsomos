@@ -51,7 +51,7 @@
         <ul class="list-unstyled components">
             <p>Filter Products</p>
             <li>
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Supplier</a>
+                <a id="suppliers" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Supplier</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
                         <a href="#">Supplier 1</a>
@@ -102,7 +102,7 @@
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
-                <img class="" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img height="400px" class="" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                     <p class="card-text" th:text="${prod.description}">Product description... </p>
