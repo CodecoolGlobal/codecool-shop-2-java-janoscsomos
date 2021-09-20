@@ -3,4 +3,16 @@
     background-size: 105%;
     color: black;
     text-shadow: 0 0 3px white, 0 0 5px white;
+    animation: backgroundScroll 15s linear infinite;
+}
+
+@-webkit-keyframes backgroundScroll {
+    from {background-position: 0 0;}
+    to {background-position: -180px 0;}
+}
+
+#footer {
+    background-color: #e8c500;
+    color: black;
+    text-align: center;
 }

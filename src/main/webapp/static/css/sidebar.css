@@ -4,9 +4,11 @@
 }
 
 #sidebar {
+    position: relative;
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
+    margin-top: -1.7%;
 }
 
 #sidebar.active {
@@ -53,11 +55,30 @@ a, a:hover, a:focus {
     transition: all 0.3s;
 }
 
-#sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
-    background: #ffe135;
+#sidebar, footer {
+    background: linear-gradient(270deg, #e8c500, #ffe968);
+    background-size: 800% 800%;
+    -webkit-animation: AnimationName 30s ease infinite;
+    -moz-animation: AnimationName 30s ease infinite;
+    animation: AnimationName 5s ease infinite;
     color: #000;
     transition: all 0.3s;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0 50%}
 }
 
 #sidebar .sidebar-header {
@@ -80,7 +101,7 @@ a, a:hover, a:focus {
     font-size: 1.1em;
     display: block;
 }
-#sidebar ul li a:hover {
+#sidebar ul li a:hover, a.dropdown-toggle:hover {
     color: #ffe968;
     background: #000;
 }
@@ -93,4 +114,13 @@ ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #ffe968;
+}
+
+#sidebarCollapse {
+    background-color: #e8c500;
+    border-color: #ffe968;
+    color: black;
+    margin-left: -3%;
+    outline: none;
+    box-shadow: none;
 }
