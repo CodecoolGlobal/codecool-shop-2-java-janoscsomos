@@ -125,3 +125,8 @@ ul ul a {
     outline: none;
     box-shadow: none;
 }
+
+#sidebarCollapse:hover {
+    background-color: black;
+    color: #e8c500;
+}

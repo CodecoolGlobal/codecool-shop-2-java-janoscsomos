@@ -37,3 +37,31 @@
 .img-hover-zoom:hover img {
     transform: scale(1.5);
 }
+
+#cartButton {
+    background-color: #e8c500;
+    margin-left: 65%;
+    margin-top: -3.8%;
+    border-color: #ffe968;
+    border-radius: 50px;
+    color: black;
+    box-shadow: none;
+    width: 60px;
+    height: 60px;
+    position: fixed;
+}
+
+#cartButton:hover, #cartButton:active,
+.btn-primary:hover, .btn-primary:active{
+    background-color: black;
+    color: #e8c500;
+    outline: none;
+    border-color: #ffe968;
+}
+
+.btn-primary {
+    background-color: #e8c500;
+    border-color: #ffe968;
+    color: black;
+    box-shadow: none;
+}
