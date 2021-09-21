@@ -23,7 +23,6 @@ public class SupplierJsonServlet  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
-
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
@@ -31,8 +30,8 @@ public class SupplierJsonServlet  extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
-        String supplierId = request.getParameter("supplierId");
-        out.println(gson.toJson(productService.getProductsForSupplier(3)));
+        String supplierId = request.getParameter("supplier");
+        out.println(gson.toJson(productService.getProductsForSupplier(Integer.parseInt(supplierId))));
     }
 }
 
