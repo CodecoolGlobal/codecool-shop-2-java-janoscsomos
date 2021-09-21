@@ -33,5 +33,10 @@ public class ProductService{
         return productDao.getBy(category);
     }
 
+    public List<Product> getProductsByName(String name){
+        var product = productDao.find(name);
+        return productDao.getBy(name);
+    }
+
 
 }

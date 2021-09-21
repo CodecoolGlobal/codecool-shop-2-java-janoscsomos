@@ -39,6 +39,11 @@ public class ProductDaoMem implements ProductDao {
     }
 
     @Override
+    public Product find(String name) {
+        return data.stream().filter(t -> t.getName().contains(name)).findFirst().orElse(null);
+    }
+
+    @Override
     public void remove(int id) {
         data.remove(find(id));
     }
@@ -56,5 +61,10 @@ public class ProductDaoMem implements ProductDao {
     @Override
     public List<Product> getBy(ProductCategory productCategory) {
         return data.stream().filter(t -> t.getProductCategory().equals(productCategory)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Product> getBy(String name) {
+        return data.stream().filter(t -> t.getName().contains(name)).collect(Collectors.toList());
     }
 }

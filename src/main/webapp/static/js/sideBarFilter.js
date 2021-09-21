@@ -4,6 +4,11 @@ const urlCategory = "/api/category";
 const urlSupplier = "/api/supplier"
 const cardContainer = document.getElementById('products');
 const menuNameContainer = document.getElementById('current-menu');
+const searchByName = document.getElementById('search-by-name');
+
+searchByName.addEventListener('change', () => {
+    alert('hello');
+})
 
 for (const supplierMenuButton of supplierMenuButtons) {
     supplierMenuButton.addEventListener('click', () => {

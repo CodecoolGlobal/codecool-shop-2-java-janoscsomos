@@ -47,6 +47,11 @@
         <ul class="list-unstyled components">
             <p>Filter Products</p>
             <li>
+                <label> Search by Name
+                    <input id="search-by-name">
+                </label>
+            </li>
+            <li>
                 <a id="suppliers" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Supplier</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li th:each="supplier, iterStart: ${allSuppliers}">
