@@ -60,14 +60,8 @@
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Category</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Category 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Category 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Category 3</a>
+                    <li th:each="category,iterStat : ${allCategory}">
+                        <a class="category-list" th:text="${category.name}"></a>
                     </li>
                 </ul>
             </li>
