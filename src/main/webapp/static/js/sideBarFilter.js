@@ -1,13 +1,42 @@
 const categoryMenuButtons = document.getElementsByClassName("category-menu-element");
 const supplierMenuButtons = document.getElementsByClassName("supplier-menu-element");
 const urlCategory = "/api/category";
-const urlSupplier = "/api/supplier"
+const urlSupplier = "/api/supplier";
+const urlNameSearch = "/api/search_name";
 const cardContainer = document.getElementById('products');
 const menuNameContainer = document.getElementById('current-menu');
 const searchByName = document.getElementById('search-by-name');
 
-searchByName.addEventListener('change', () => {
-    alert('hello');
+searchByName.addEventListener('input', () => {
+    fetch(`${urlNameSearch}?name=${searchByName.value}`)
+        .then(response => response.json())
+        .then(data => {
+            let newContent = "";
+            for (let product of data) {
+                newContent += `
+                    <div class="col col-sm-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <div class="img-hover-zoom">
+                            <img width="350px" height="400px" src='/static/img/product_${product.id}.jpg'
+                                 alt=""/>
+                        </div>
+                        <div class="card-header">
+                            <h4 class="card-title">${product.name}</h4>
+                            <p class="card-text" >${product.description}</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text">
+                                <p class="lead">${product.defaultPrice} ${product.defaultCurrency}</p>
+                            </div>
+                            <div class="card-text">
+                                <a class="btn btn-success" href="#">Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+            }
+            cardContainer.innerHTML = newContent;
+        })
 })
 
 for (const supplierMenuButton of supplierMenuButtons) {

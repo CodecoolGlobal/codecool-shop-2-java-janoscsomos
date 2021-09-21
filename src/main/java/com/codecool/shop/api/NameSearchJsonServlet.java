@@ -30,9 +30,8 @@ public class NameSearchJsonServlet  extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
-        System.out.println(productService.getProductsByName("ake"));
-        //String supplierId = request.getParameter("supplier");
-        //out.println(gson.toJson(productService.getProductsForSupplier(Integer.parseInt(supplierId))));
+        String namePart = request.getParameter("name");
+        out.println(gson.toJson(productService.getProductsByName(namePart)));
     }
 }
 
