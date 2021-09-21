@@ -27,6 +27,9 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/sidebar.css"/>
     <link rel="icon" href="/static/img/banana_favicon.png">
+
+    <script src="../../static/js/handleSideBar.js" defer></script>
+    <script src="../../static/js/sideBarFilter.js" defer></script>
 </head>
 
 <body>
@@ -55,7 +58,7 @@
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Category</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
                     <li th:each="category,iterStat : ${allCategory}">
-                        <a class="category-menu-element" href="#" th:text="${category.name}" ></a>
+                        <a class="category-menu-element" th:id="${category.id}" href="#" th:text="${category.name}" ></a>
                     </li>
                 </ul>
             </li>
@@ -76,7 +79,7 @@
             </div>
         </nav>
     </div>
-    <div>
+    <div id="current-menu">
         <strong th:text="${category.name}">Category Title</strong>
     </div>
 
@@ -112,6 +115,6 @@
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <!-- Custom scripts-->
-<script src="../../static/js/handleSideBar.js"></script>
+
 </body>
 </html>

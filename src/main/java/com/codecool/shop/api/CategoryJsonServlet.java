@@ -31,50 +31,11 @@ public class CategoryJsonServlet  extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-        /*
-        String pageNumber = request.getParameter("page");
-
-        String url = "https://api.hnpwa.com/v0/news/1.json";
-        if (pageNumber != null) {
-            url = "https://api.hnpwa.com/v0/news/" + pageNumber +".json";
-        }
-         */
-
         Gson gson = new Gson();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore);
-        List<Product> allProductsFromCategory = productService.getProductsForCategory(6);
-        List<String> jsonProductList = new LinkedList<>();
-        for (Product product : allProductsFromCategory) {
-            System.out.println(gson.toJson(product));
-        }
-        out.println(gson.toJson(productService.getProductsForCategory(6)));
+        String categoryId = request.getParameter("category");
+        out.println(gson.toJson(productService.getProductsForCategory(Integer.parseInt(categoryId))));
     }
-
-    private static String streamToString(InputStream inputStream) {
-        String text = new Scanner(inputStream, "UTF-8").useDelimiter("\\Z").next();
-        return text;
-    }
-
-    public static String jsonGetRequest(String urlQueryString) {
-        String json = null;
-        try {
-            URL url = new URL(urlQueryString);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setInstanceFollowRedirects(false);
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("charset", "utf-8");
-            connection.connect();
-            InputStream inStream = connection.getInputStream();
-            json = streamToString(inStream); // input stream to string
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return json;
-    }
-
-
 }
