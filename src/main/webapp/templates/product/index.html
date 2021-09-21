@@ -4,35 +4,29 @@
     <meta charset="utf-8" />
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
     <title>Banana Store</title>
     <!-- Our Custom CSS -->
     <link rel="stylesheet" href="style.css">
-
     <!-- Font Awesome JS -->
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
     <!--Latest compiled and minified Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
     integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
-
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/sidebar.css"/>
+    <link rel="icon" href="/static/img/banana_favicon.png">
 </head>
 
 <body>
@@ -47,11 +41,10 @@
         <div class="sidebar-header">
             <h3>Menu</h3>
         </div>
-
         <ul class="list-unstyled components">
             <p>Filter Products</p>
             <li>
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Supplier</a>
+                <a id="suppliers" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Supplier</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
                         <a href="#">Supplier 1</a>
@@ -95,14 +88,16 @@
             </div>
         </nav>
     </div>
-    <div class="card">
+    <div>
         <strong th:text="${category.name}">Category Title</strong>
     </div>
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
             <div class="card">
-                <img class="" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <div class="img-hover-zoom">
+                    <img width="350px" height="400px" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                </div>
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                     <p class="card-text" th:text="${prod.description}">Product description... </p>

@@ -9,6 +9,7 @@
     max-width: 250px;
     min-height: 100vh;
     margin-top: -1.7%;
+    box-shadow: 5px 5px 8px #999999;
 }
 
 #sidebar.active {
