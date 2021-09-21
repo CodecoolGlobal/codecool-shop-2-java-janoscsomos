@@ -27,6 +27,8 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/sidebar.css"/>
     <link rel="icon" href="/static/img/banana_favicon.png">
+    <script src="../../static/js/handleSideBar.js" defer></script>
+    <script src="../../static/js/sideBarFilter.js" defer></script>
 </head>
 
 <body>
@@ -44,30 +46,23 @@
         <ul class="list-unstyled components">
             <p>Filter Products</p>
             <li>
+                <label> Search by Name
+                    <input id="search-by-name">
+                </label>
+            </li>
+            <li>
                 <a id="suppliers" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Supplier</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a href="#">Supplier 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Supplier 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Supplier 3</a>
+                    <li th:each="supplier, iterStart: ${allSuppliers}">
+                        <a class="supplier-menu-element" th:id="${supplier.id}" href="#" th:text="${supplier.name}"></a>
                     </li>
                 </ul>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Filter by Category</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a href="#">Category 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Category 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Category 3</a>
+                    <li th:each="category,iterStat : ${allCategory}">
+                        <a class="category-menu-element" th:id="${category.id}" href="#" th:text="${category.name}" ></a>
                     </li>
                 </ul>
             </li>
@@ -89,8 +84,7 @@
             </div>
         </nav>
     </div>
-
-    <div>
+    <div id="current-menu">
         <strong th:text="${category.name}">Category Title</strong>
     </div>
 
@@ -136,6 +130,5 @@
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <!-- Custom scripts-->
-<script src="../../static/js/handleSideBar.js"></script>
 </body>
 </html>
