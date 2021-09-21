@@ -1,5 +1,6 @@
 const categoryMenuButtons = document.getElementsByClassName("category-menu-element");
-let url = "/api/category";
+let urlCategory = "/api/category";
+
 const cardContainer = document.getElementById('products');
 const menuNameContainer = document.getElementById('current-menu');
 
@@ -7,7 +8,7 @@ for (const categoryMenuButton of categoryMenuButtons) {
     categoryMenuButton.addEventListener('click', () => {
         //console.log(menuNameContainer);
         menuNameContainer.innerHTML = ` <strong>${categoryMenuButton.innerText}</strong>`
-        fetch(`${url}?category=${categoryMenuButton.id}`)
+        fetch(`${urlCategory}?category=${categoryMenuButton.id}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
