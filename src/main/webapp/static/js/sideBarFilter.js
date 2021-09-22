@@ -1,13 +1,12 @@
-
-
-export function sidebarFilterExport () {sidebarFilter()}
+export function sidebarFilterExport () {sidebarFilter().then(() => {return null;})}
 import {addToCartExport} from "./addToCart.js";
+import {getNormalProductCard} from "./htmlFactory.js";
 
 async function sidebarFilter () {
     const categoryMenuButtons = document.getElementsByClassName("category-menu-element");
     const supplierMenuButtons = document.getElementsByClassName("supplier-menu-element");
-    const urlCategory = "/api/category";
-    const urlSupplier = "/api/supplier";
+    const urlCategory = "/api/category?category=";
+    const urlSupplier = "/api/supplier?supplier=";
     const urlNameSearch = "/api/search_name";
     const cardContainer = document.getElementById('products');
     const menuNameContainer = document.getElementById('current-menu');
@@ -18,106 +17,31 @@ async function sidebarFilter () {
             .then(response => response.json())
             .then(data => {
             let newContent = "";
-            for (let product of data) {
-                newContent += `
-                    <div class="col col-sm-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <div class="img-hover-zoom">
-                            <img width="350px" height="400px" src='/static/img/product_${product.id}.jpg'
-                                 alt=""/>
-                        </div>
-                        <div class="card-header">
-                            <h4 class="card-title">${product.name}</h4>
-                            <p class="card-text" >${product.description}</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <p class="lead">${product.defaultPrice} ${product.defaultCurrency}</p>
-                            </div>
-                            <div class="card-text">
-                                <a class="btn btn-success add-to-cart" id="${product.name}" href="#">Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>`
-            }
+            for (let product of data)
+                newContent += getNormalProductCard(product);
             cardContainer.innerHTML = newContent;
             addToCartExport();
         }
     )
-    })
+    });
+    addLinkEventListeners(supplierMenuButtons, menuNameContainer, urlSupplier, cardContainer);
+    addLinkEventListeners(categoryMenuButtons, menuNameContainer, urlCategory, cardContainer)
+}
 
-    for (const supplierMenuButton of supplierMenuButtons) {
-        supplierMenuButton.addEventListener('click', () => {
-            menuNameContainer.innerHTML = ` <strong>${supplierMenuButton.innerText}</strong>`
-            fetch(`${urlSupplier}?supplier=${supplierMenuButton.id}`)
+function addLinkEventListeners(menuButtons, menuNameContainer, url, cardContainer) {
+    for (const menuButton of menuButtons) {
+        menuButton.addEventListener('click', () => {
+            menuNameContainer.innerHTML = `<strong>${menuButton.innerText}</strong>`
+            fetch(`${url}${menuButton.id}`)
                 .then(response => response.json())
                 .then(data => {
                     let newContent = "";
-                    for (let product of data) {
-                        newContent += `
-                    <div class="col col-sm-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <div class="img-hover-zoom">
-                            <img width="350px" height="400px" src='/static/img/product_${product.id}.jpg'
-                                 alt=""/>
-                        </div>
-                        <div class="card-header">
-                            <h4 class="card-title">${product.name}</h4>
-                            <p class="card-text" >${product.description}</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <p class="lead">${product.defaultPrice} ${product.defaultCurrency}</p>
-                            </div>
-                            <div class="card-text">
-                                <a class="btn btn-success add-to-cart" id="${product.name}" href="#">Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>`
-                    }
+                    for (let product of data)
+                        newContent += getNormalProductCard(product) + `<br>`;
                     cardContainer.innerHTML = newContent;
                     addToCartExport();
-                })
-        })
-    }
-
-    for (const categoryMenuButton of categoryMenuButtons) {
-        categoryMenuButton.addEventListener('click', () => {
-            menuNameContainer.innerHTML = ` <strong>${categoryMenuButton.innerText}</strong>`
-            fetch(`${urlCategory}?category=${categoryMenuButton.id}`)
-                .then(response => response.json())
-                .then(data => {
-                    let newContent = "";
-                    for (let product of data) {
-                        newContent += `
-                    <div class="col col-sm-12 col-md-6 col-lg-4">
-                    <div class="card">
-                        <div class="img-hover-zoom">
-                            <img width="350px" height="400px" src='/static/img/product_${product.id}.jpg'
-                                 alt=""/>
-                        </div>
-                        <div class="card-header">
-                            <h4 class="card-title">${product.name}</h4>
-                            <p class="card-text" >${product.description}</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text">
-                                <p class="lead">${product.defaultPrice} ${product.defaultCurrency}</p>
-                            </div>
-                            <div class="card-text">
-                                <a class="btn btn-success add-to-cart" id="${product.name}" href="#">Add to cart</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>`
-                    }
-                    cardContainer.innerHTML = newContent;
-                    addToCartExport();
-                })
-
-        })
+                });
+        });
     }
 }
 

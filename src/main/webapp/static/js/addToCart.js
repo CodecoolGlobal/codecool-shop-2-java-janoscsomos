@@ -1,7 +1,5 @@
 export function addToCartExport () {addToCart()}
 
-
-
 function addToCart() {
 
     const addToCartButtons = document.getElementsByClassName("add-to-cart");
