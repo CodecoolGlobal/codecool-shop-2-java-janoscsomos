@@ -25,7 +25,7 @@ import java.util.Map;
 
 @WebServlet(name = "SessionAddJsonServlet", urlPatterns = "/api/session/add")
 public class SessionAddJsonServlet extends HttpServlet {
-    Map<String, String> shoppingCart;
+    Map<String, Integer> shoppingCart;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,12 +39,12 @@ public class SessionAddJsonServlet extends HttpServlet {
     */
         HttpSession session = request.getSession();
         if (session.isNew()) {
-            shoppingCart = new HashMap<String, String>();
+            shoppingCart = new HashMap<String, Integer>();
             session.setAttribute("shoppingCart", shoppingCart);
         } else {
-            shoppingCart = (HashMap<String, String>) session.getAttribute("shoppingCart");
+            shoppingCart = (HashMap<String, Integer>) session.getAttribute("shoppingCart");
         }
-        shoppingCart.put("banana", "cake");
+        shoppingCart.put(request.getParameter("productName"), 1);
 
 
     }
