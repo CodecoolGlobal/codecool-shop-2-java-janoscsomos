@@ -1,4 +1,4 @@
-window.onload = initHandleSidebar;
+export function handleSidebar () {initHandleSidebar()}
 
 function initHandleSidebar() {
     document.querySelector("#sidebarCollapse").addEventListener(

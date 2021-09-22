@@ -39,6 +39,7 @@ public class SessionGetJsonServlet  extends HttpServlet {
         String current = "";
 
         //ShoppingCart shoppingCart = (ShoppingCart) request.getSession().getAttribute("cart");
-        out.println(request.getSession().getAttribute("shoppingCart"));
+
+        out.println((request.getSession().getAttribute("shoppingCart")));
     }
 }
