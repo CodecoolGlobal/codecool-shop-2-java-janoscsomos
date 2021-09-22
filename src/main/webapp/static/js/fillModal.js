@@ -3,8 +3,6 @@ export function fillModalExport () {fillModal()}
 
 function fillModal() {
     const cartItemContainer = document.getElementById("current-item-container");
-    console.log(cartItemContainer);
-    console.log(cartItemContainer.children);
     fetch('/api/session/get')
         .then(response => (response.json())
         .then(data => {
@@ -16,7 +14,7 @@ function fillModal() {
                            src='/static/img/product_${product.id}.jpg' alt="Sample">
                       <div class="media-body">
                         <h5>${product.name}</h5>
-                        <p class="mb-0"><span><strong>${product.defaultPrice}</strong></span></p>
+                        <p class="mb-0"><span><strong>${product.defaultPrice} ${product.defaultCurrency}</strong></span></p>
                       </div>
                     </div>
                 `
