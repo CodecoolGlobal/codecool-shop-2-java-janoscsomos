@@ -25,10 +25,6 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
-        Supplier amazon = new Supplier("Amazon", "Digital content and services");
-        supplierDataStore.add(amazon);
-        Supplier lenovo = new Supplier("Lenovo", "Computers");
-        supplierDataStore.add(lenovo);
         Supplier banananson = new Supplier("Bana N. Anson's Wholesale Market", "Wholesale market for fruits and ingredients.");
         supplierDataStore.add(banananson);
         Supplier bananaToysInc = new Supplier("Banana Toys Inc.", "Supplier specializing in banana-themed toys.");
@@ -50,7 +46,6 @@ public class Initializer implements ServletContextListener {
 
 
         //setting up a new product category
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         ProductCategory variants = new ProductCategory("Banana variants", "Basics", "Bananas in all shapes and sizes.");
         ProductCategory specialOffers = new ProductCategory("Special Offers", "Basics", "Bananas for special needs.");
         ProductCategory ingredients = new ProductCategory("Ingredients", "Food", "Banana is not just about the fruit, here you can find other parts that can be used in foods.");
@@ -58,7 +53,6 @@ public class Initializer implements ServletContextListener {
         ProductCategory foods = new ProductCategory("Banana foods", "Food", "Wide selection of banana based dishes, desserts and sweets.");
         ProductCategory merchandise = new ProductCategory("Merchandise", "Merchandise", "All kinds of banana-themed fun stuff from plushes to apparel.");
         ProductCategory miscellaneous = new ProductCategory("Miscellaneous", "Miscellaneous", "Haven't found what you're looking for anywhere else? Try here!");
-        productCategoryDataStore.add(tablet);
         productCategoryDataStore.add(foods);
         productCategoryDataStore.add(variants);
         productCategoryDataStore.add(cultivation);
@@ -67,11 +61,8 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(miscellaneous);
         productCategoryDataStore.add(specialOffers);
 
-        
+
         //setting up products and printing it
-        productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
-        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
-        productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
         productDataStore.add(new Product("Banaan", new BigDecimal("3.49"), "USD", "Naan is a Western/Southern Asian flatbread, now with added bananas. Mostly for the name.", foods, musaCatering));
         productDataStore.add(new Product("Beanie", new BigDecimal("25"), "USD", "A nice warm beanie with banana badge.", merchandise, pnbClothing));
         productDataStore.add(new Product("Inflatable Banana Boat", new BigDecimal("30"), "USD", "All aboard the USS Banana!", merchandise, bMerch));
