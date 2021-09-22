@@ -1,10 +1,18 @@
-let requiredFields = document.querySelectorAll(".form-control")
+const requiredFields = document.querySelectorAll(".form-control");
+const checkoutButton = document.querySelector("button");
 
 for (let field of requiredFields) {
-    field.addEventListener("change", fieldHandler)
+    field.addEventListener("change", fieldHandler);
 }
 
+checkoutButton.addEventListener("click", checkoutButtonHandler);
+
+let logOutput = [];
 
 function fieldHandler(e) {
-    console.log(`${e.target.id} input occurred`);
+    logOutput.push(`${e.target.id} input occurred`);
+}
+
+function checkoutButtonHandler(e) {
+    console.log(logOutput);
 }
