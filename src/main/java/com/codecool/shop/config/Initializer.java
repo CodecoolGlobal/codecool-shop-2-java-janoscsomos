@@ -29,45 +29,45 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(amazon);
         Supplier lenovo = new Supplier("Lenovo", "Computers");
         supplierDataStore.add(lenovo);
-        Supplier bananaStore = new Supplier("Banana Store", "Placeholder supplier for initial product creation");
-        supplierDataStore.add(bananaStore);
-        Supplier bananaToysInc = new Supplier("Banana Toys Inc.", "Supplier specializing in banana-themed toys.");
-        supplierDataStore.add(bananaToysInc);
-        Supplier yellowCafe = new Supplier("Yellow Cafe", "Pastry shop providing banana-based confectionery.");
-        supplierDataStore.add(yellowCafe);
         Supplier banananson = new Supplier("Bana N. Anson's Wholesale Market", "Wholesale market for fruits and ingredients.");
         supplierDataStore.add(banananson);
-        Supplier musaCatering = new Supplier("Musa Catering", "Catering service");
-        supplierDataStore.add(musaCatering);
-        Supplier cavendishInstruments = new Supplier("Cavendish Instruments", "Instruments company");
+        Supplier bananaToysInc = new Supplier("Banana Toys Inc.", "Supplier specializing in banana-themed toys.");
+        supplierDataStore.add(bananaToysInc);
+        Supplier bMerch = new Supplier("B-Merch", "Company specializing in banana-themed merchandise.");
+        supplierDataStore.add(bMerch);
+        Supplier cavendishInstruments = new Supplier("Cavendish Instruments", "Instruments company.");
         supplierDataStore.add(cavendishInstruments);
+        Supplier musaCatering = new Supplier("Musa Catering", "Catering service.");
+        supplierDataStore.add(musaCatering);
+        Supplier other = new Supplier("Other", "Products from other sources.");
+        supplierDataStore.add(other);
         Supplier pnbClothing = new Supplier("P & B Clothing", "Fashion company with many banana-themed clothes");
         supplierDataStore.add(pnbClothing);
         Supplier tropicalFarmerCo = new Supplier("Tropical Farmer Co.", "Company specializing in cultivating tropical plants.");
         supplierDataStore.add(tropicalFarmerCo);
-        Supplier bMerch = new Supplier("B-Merch", "Company specializing in banana-themed merchandise");
-        supplierDataStore.add(bMerch);
-        Supplier other = new Supplier("Other", "Products from other sources.");
-        supplierDataStore.add(other);
+        Supplier yellowCafe = new Supplier("Yellow Cafe", "Pastry shop providing banana-based confectionery.");
+        supplierDataStore.add(yellowCafe);
+
 
         //setting up a new product category
         ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
         ProductCategory variants = new ProductCategory("Banana variants", "Basics", "Bananas in all shapes and sizes.");
         ProductCategory specialOffers = new ProductCategory("Special Offers", "Basics", "Bananas for special needs.");
         ProductCategory ingredients = new ProductCategory("Ingredients", "Food", "Banana is not just about the fruit, here you can find other parts that can be used in foods.");
-        ProductCategory cultivation = new ProductCategory("Cultivation", "Horticulture", "Wanna grow your own bananas? Look no further, here's what you need to start");
+        ProductCategory cultivation = new ProductCategory("Cultivation", "Horticulture", "Wanna grow your own bananas? Look no further, here's what you need to start.");
         ProductCategory foods = new ProductCategory("Banana foods", "Food", "Wide selection of banana based dishes, desserts and sweets.");
         ProductCategory merchandise = new ProductCategory("Merchandise", "Merchandise", "All kinds of banana-themed fun stuff from plushes to apparel.");
         ProductCategory miscellaneous = new ProductCategory("Miscellaneous", "Miscellaneous", "Haven't found what you're looking for anywhere else? Try here!");
         productCategoryDataStore.add(tablet);
-        productCategoryDataStore.add(variants);
-        productCategoryDataStore.add(specialOffers);
-        productCategoryDataStore.add(ingredients);
-        productCategoryDataStore.add(cultivation);
         productCategoryDataStore.add(foods);
+        productCategoryDataStore.add(variants);
+        productCategoryDataStore.add(cultivation);
+        productCategoryDataStore.add(ingredients);
         productCategoryDataStore.add(merchandise);
         productCategoryDataStore.add(miscellaneous);
+        productCategoryDataStore.add(specialOffers);
 
+        
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", new BigDecimal("49.9"), "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
         productDataStore.add(new Product("Lenovo IdeaPad Miix 700", new BigDecimal("479"), "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
