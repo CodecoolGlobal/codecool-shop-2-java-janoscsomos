@@ -18,11 +18,15 @@ function fieldHandler(e) {
 }
 
 function fieldChecker() {
-    let fieldsAtCheckout = document.querySelectorAll(".form-control");
     logOutput.push("FIELD STATUSES ON CHECKOUT EVENT")
-    for (let field of fieldsAtCheckout) {
-        let fieldStatus = field.id + " length: " + field.value.length.toString();
-        logOutput.push(fieldStatus);
+    for (let field of requiredFields) {
+        if (field.id === "email") {
+            logOutput.push(field.id + ": " + field.value)
+        } else {
+            let validInput = field.value.length > 0 ? "yes" : "no"
+            let fieldStatus = field.id + " valid input: " + validInput;
+            logOutput.push(fieldStatus);
+        }
     }
 }
 
