@@ -38,5 +38,10 @@ public class ProductService{
         return productDao.getBy(name);
     }
 
+    public Product getProductByName(String name) {
+        var product = productDao.findOne(name);
+        return productDao.getByOne(name);
+    }
+
 
 }
