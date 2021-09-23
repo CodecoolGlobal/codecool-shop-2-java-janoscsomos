@@ -7,6 +7,7 @@ export async function getTotalPrice() {
         let currentAmount = parseFloat(product.amount) * parseFloat(product.defaultPrice);
         totalSum += currentAmount;
     }
+    console.log(totalSum.toFixed(2).toString());
     document.querySelector("#total-amount-number").textContent =
         "Total amount: " + totalSum.toFixed(2).toString() + " $";
 }

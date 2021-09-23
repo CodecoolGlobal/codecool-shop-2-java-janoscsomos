@@ -17,11 +17,11 @@ getCart().then(data => {
 }).then(clearCart);
 
 async function clearCart() {
-    await fetch("http://0.0.0.0:8888/api/session/removeAll", {method: 'GET',})
+    await fetch("/api/session/removeAll", {method: 'GET',})
 }
 
 async function getCart() {
-    let response = await fetch("http://0.0.0.0:8888/api/session/get", {
+    let response = await fetch("/api/session/get", {
         method: 'GET',
     })
     if (response.status === 200) {
