@@ -52,7 +52,7 @@ async function checkoutButtonHandler(e) {
     apiGet("http://0.0.0.0:8888/api/adminlog", logOutput, "logoutput");
     if (fieldChecker()) {
         await getCart().then(data =>  {
-
+            console.log(data);
             let customerEmail = document.getElementById("email").value;
             orderOutput.push("Customer email address: " + customerEmail);
             for (let item of data) {
@@ -79,11 +79,10 @@ async function apiGet(url, payload, queryArgument) {
 }
 
 async function getCart() {
-    let response = await fetch("http://0.0.0.0:8888/api/session/get", {
+    let response = await fetch("/api/session/get", {
         method: 'GET',
     })
     if (response.status === 200) {
-        let data = response.json()
-        return data
+        return response.json()
     }
 }
