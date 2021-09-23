@@ -28,27 +28,17 @@ public class SessionQuantityChangeJsonServlet  extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        Gson gson = new Gson();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
-        HashMap<String, Integer> cart = (HashMap<String, Integer>) request.getSession().getAttribute("shoppingCart");
-        int currentItemValue = cart.get(request.getParameter("item"));
+        Product currentItem = productService.getProductByName(request.getParameter("item"));
         if (request.getParameter("relation").equals("add")) {
-            currentItemValue++;
+            currentItem.setAmount(currentItem.getAmount() + 1);
         } else {
-            currentItemValue--;
+            if (currentItem.getAmount() > 1) {
+                currentItem.setAmount(currentItem.getAmount() - 1);
+            }
         }
-        cart.replace(request.getParameter("item"),currentItemValue);
-        /*
-        List<Product> output = new LinkedList<>();
-        for (String product : cart.keySet()) {
-            output.add(productService.getProductByName(product));
-        }
-        out.println(gson.toJson(output));
-
-         */
     }
 }
