@@ -56,11 +56,11 @@ async function checkoutButtonHandler(e) {
             let customerEmail = document.getElementById("email").value;
             orderOutput.push("Customer email address: " + customerEmail);
             for (let item of data) {
-                orderOutput.push("Ordered item: " + item['name']);
+                orderOutput.push("Ordered item and amount: " + item['name'] + " " + item['amount']);
             }
             let totalSum = 0;
             for (let item of data) {
-                totalSum += parseFloat(item['defaultPrice']);
+                totalSum += parseFloat(item['defaultPrice']) * parseFloat(item['amount']);
             }
             orderOutput.push("Total amount: " + totalSum + " USD");
             return null;
