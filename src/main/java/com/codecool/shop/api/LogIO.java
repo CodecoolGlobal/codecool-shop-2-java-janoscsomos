@@ -3,9 +3,7 @@ package com.codecool.shop.api;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class LogIO {
 

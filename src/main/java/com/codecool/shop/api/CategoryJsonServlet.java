@@ -2,7 +2,6 @@ package com.codecool.shop.api;
 
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Supplier;
 import com.google.gson.Gson;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
