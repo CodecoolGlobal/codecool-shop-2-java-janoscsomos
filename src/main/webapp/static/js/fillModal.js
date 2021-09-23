@@ -1,5 +1,6 @@
+export function fillModalExport() {fillModal();}
 
-export function fillModalExport () {fillModal()}
+import {getCartContentCard} from "./htmlFactory.js";
 
 function fillModal() {
     const cartItemContainer = document.getElementById("current-item-container");
@@ -8,16 +9,7 @@ function fillModal() {
         .then(data => {
             let newContent = "";
             for (let product of data) {
-                newContent += `  
-                    <div class="media mb-3">
-                      <img class="d-flex z-depth-1 rounded mr-3" width="64px"
-                           src='/static/img/product_${product.id}.jpg' alt="Sample">
-                      <div class="media-body">
-                        <h5>${product.name}</h5>
-                        <p class="mb-0"><span><strong>${product.defaultPrice} ${product.defaultCurrency}</strong></span></p>
-                      </div>
-                    </div>
-                `
+                newContent += getCartContentCard(product);
             }
             cartItemContainer.innerHTML = newContent;
         }));

@@ -28,7 +28,8 @@ import java.util.List;
 @WebServlet(name = "SessionGetJsonServlet", urlPatterns = "/api/session/get")
 public class SessionGetJsonServlet  extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
@@ -40,8 +41,6 @@ public class SessionGetJsonServlet  extends HttpServlet {
         HashMap<String, Integer> cart = (HashMap<String, Integer>) request.getSession().getAttribute("shoppingCart");
         List<Product> output = new LinkedList<>();
         for (String product : cart.keySet()) {
-
-            System.out.println(product);
             output.add(productService.getProductByName(product));
         }
         out.println(gson.toJson(output));
