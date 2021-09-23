@@ -11,13 +11,16 @@ checkoutButton.addEventListener("click", checkoutButtonHandler);
 
 
 let logOutput = [];
+let orderOutput = [];
+
+getCart().then(data => {console.log(data);});
 
 
 function fieldHandler(e) {
     logOutput.push(`${e.target.id} input occurred`);
 }
 
-function fieldChecker() {
+function fieldLog() {
     logOutput.push("FIELD STATUSES ON CHECKOUT EVENT")
     for (let field of requiredFields) {
         if (field.id === "email") {
@@ -30,14 +33,55 @@ function fieldChecker() {
     }
 }
 
-function checkoutButtonHandler(e) {
-    fieldChecker();
-    apiGet("http://0.0.0.0:8888/api/adminlog", logOutput);
+
+function fieldChecker() {
+    let allOkay = true;
+    for (let field of requiredFields) {
+        if (field.value.length === 0) {
+            allOkay = false;
+        }
+    }
+    return allOkay;
+}
+
+async function checkoutButtonHandler(e) {
+    fieldLog();
+    apiGet("http://0.0.0.0:8888/api/adminlog", logOutput, "logoutput");
+    if (fieldChecker()) {
+        await getCart().then(data =>  {
+            console.log(data);
+            let orderId = document.getElementsByClassName("orderId")[0].id;
+            orderOutput.push("Order ID: " + orderId);
+            //let customerName =
+            let customerEmail = document.getElementById("email").value;
+            orderOutput.push("Customer email address: " + customerEmail);
+            for (let item of data) {
+                orderOutput.push("Ordered item and amount: " + item['name'] + " " + item['amount']);
+            }
+            let totalSum = 0;
+            for (let item of data) {
+                totalSum += parseFloat(item['defaultPrice']) * parseFloat(item['amount']);
+            }
+            orderOutput.push("Total amount: " + totalSum + " USD");
+            return null;
+        })
+        apiGet("http://0.0.0.0:8888/api/order", orderOutput, "order");
+    }
 }
 
 
-async function apiGet(url, payload) {
-    let response = await fetch(`${url}?logoutput=${payload}`, {
+async function apiGet(url, payload, queryArgument) {
+    let response = await fetch(`${url}?${queryArgument}=${payload}`, {
         method: 'GET',
     })
+}
+
+async function getCart() {
+    let response = await fetch("http://0.0.0.0:8888/api/session/get", {
+        method: 'GET',
+    })
+    if (response.status === 200) {
+        let data = response.json()
+        return data
+    }
 }

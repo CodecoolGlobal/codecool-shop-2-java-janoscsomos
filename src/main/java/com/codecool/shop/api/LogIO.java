@@ -34,4 +34,24 @@ public class LogIO {
         objectOutputStream.flush();
         objectOutputStream.close();
     }
+
+    public void exportOrder(String orderOutput)
+            throws IOException, ClassNotFoundException {
+
+        String[] splitOrder= orderOutput.split(",");
+        StringBuilder formattedOrder = new StringBuilder();
+        LocalDateTime date = LocalDateTime.now();
+
+        for (int i = 0; i < splitOrder.length; i++) {
+            formattedOrder.append(splitOrder[i]);
+            formattedOrder.append("\n");
+        }
+        formattedOrder.append("Checkout time: " + date.toString());
+
+        FileOutputStream fileOutputStream = new FileOutputStream("order_" + splitOrder[0].split(" ")[2] + ".json");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(formattedOrder.toString());
+        objectOutputStream.flush();
+        objectOutputStream.close();
+    }
 }
