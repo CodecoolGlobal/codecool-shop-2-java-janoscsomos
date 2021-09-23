@@ -1,6 +1,8 @@
-export function fillModalExport() {fillModal();}
-
+import {removeItemExport} from "./removeItem.js";
 import {getCartContentCard} from "./htmlFactory.js";
+import {changeQuantityExport} from "./changeQuantity.js";
+
+export function fillModalExport() {fillModal();}
 
 function fillModal() {
     const cartItemContainer = document.getElementById("current-item-container");
@@ -12,7 +14,7 @@ function fillModal() {
                 newContent += getCartContentCard(product);
             }
             cartItemContainer.innerHTML = newContent;
+            removeItemExport();
+            changeQuantityExport();
         }));
-
-
 }

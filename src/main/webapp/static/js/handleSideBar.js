@@ -1,4 +1,4 @@
-export function handleSidebar () {initHandleSidebar();handleSideBarMenu();setMenuElementStyle()}
+export function handleSidebar () {initHandleSidebar();handleSideBarMenu();setMenuElementStyle();}
 const supplierMenuElements = document.querySelectorAll(".supplier-menu-element");
 const categoryMenuElements = document.querySelectorAll(".category-menu-element");
 
