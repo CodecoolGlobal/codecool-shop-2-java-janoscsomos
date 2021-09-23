@@ -40,4 +40,13 @@ export async function getRecommendedItems() {
             data[Math.floor((Math.random() * data.length) + 1)]
         );
     container.innerHTML = newRecommendations;
+    for (let button of container.querySelectorAll(".mb-2")) {
+        button.addEventListener(
+            "click", async (clickEvent) => {
+                clickEvent.preventDefault();
+                await fetch(`api/session/add?productName=${button.parentElement.id}`);
+                fillModalExport();
+            }
+        );
+    }
 }

@@ -60,7 +60,7 @@ export function getRecommendedItemCard(product) {
                   </a>
                 </div>
                 <!-- Bottom part: -->
-                <div class="pt-4">
+                <div class="pt-4" id="${product.name}">
                   <h5>${product.name}</h5>
                   <p><span><strong>${product.defaultPrice} ${product.defaultCurrency}</strong></span></p>
                   <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
