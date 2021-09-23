@@ -1,7 +1,8 @@
 import {removeItemExport} from "./removeItem.js";
-import {getCartContentCard} from "./htmlFactory.js";
+import {getCartContentCard, getRecommendedItemCard} from "./htmlFactory.js";
 import {changeQuantityExport} from "./changeQuantity.js";
 import {getTotalPayableExport} from "./getTotalPayable.js";
+import {apiGet} from "./fetcher.js";
 
 export function fillModalExport() {fillModal();}
 
@@ -22,5 +23,18 @@ function fillModal() {
             removeItemExport();
             changeQuantityExport();
             getTotalPayableExport();
+            getRecommendedItems().then(() => {return null;});
         }));
+}
+
+async function getRecommendedItems() {
+    let data = await apiGet("/api/session/recommend");
+    const container = document.querySelector(".row");
+    const amountOfRecommendedItems = 4;
+    let newRecommendations = "";
+    for (let add = 0; add < amountOfRecommendedItems; add++)
+        newRecommendations += getRecommendedItemCard(
+            data[Math.floor((Math.random() * data.length) + 1)]
+        );
+    container.innerHTML = newRecommendations;
 }

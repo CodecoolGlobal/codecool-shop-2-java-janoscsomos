@@ -1,7 +1,4 @@
-export function getNormalProductCard(product) {return makeNormalProductCard(product);}
-export function getCartContentCard(product) {return makeCartContentCard(product);}
-
-function makeNormalProductCard(product) {
+export function getNormalProductCard(product) {
     return `<div class="col col-sm-12 col-md-6 col-lg-4">
                     <div class="card">
                         <div class="img-hover-zoom">
@@ -24,7 +21,7 @@ function makeNormalProductCard(product) {
                 </div>`
 }
 
-function makeCartContentCard(product) {
+export function getCartContentCard(product) {
     return `<div class="media mb-3">
               <img class="d-flex z-depth-1 rounded mr-3" width="64px"
                    src='/static/img/product_${product.id}.jpg' alt="Sample">
@@ -45,4 +42,33 @@ function makeCartContentCard(product) {
                    src='/static/img/red_x.png' alt="Red X">
             </div>
             <hr>`
+}
+
+export function getRecommendedItemCard(product) {
+    return `<!-- Grid column -->
+            <div class="col-md-6 col-lg-3 mb-4">
+              <!-- Card -->
+              <div class="">
+                <!-- Top part: -->
+                <div class="view zoom overlay z-depth-2 rounded">
+                  <a href="#!">
+                    <div class="mask">
+                      <img class="img-fluid w-100"
+                           src='/static/img/product_${product.id}.jpg'>
+                      <div class="mask rgba-black-slight"></div>
+                    </div>
+                  </a>
+                </div>
+                <!-- Bottom part: -->
+                <div class="pt-4">
+                  <h5>${product.name}</h5>
+                  <p><span><strong>${product.defaultPrice} ${product.defaultCurrency}</strong></span></p>
+                  <button type="button" class="btn btn-primary btn-sm mr-1 mb-2"><i
+                          class="fas fa-shopping-cart pr-2"></i>Add
+                    to cart</button>
+                </div>
+              </div>
+              <!-- Card -->
+            </div>
+            <!-- Grid column -->`
 }

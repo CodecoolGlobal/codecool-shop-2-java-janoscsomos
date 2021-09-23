@@ -9,9 +9,9 @@ import com.codecool.shop.model.ProductCategory;
 import java.util.List;
 
 public class ProductService{
-    private ProductDao productDao;
-    private ProductCategoryDao productCategoryDao;
-    private SupplierDao supplierDao;
+    private final ProductDao productDao;
+    private final ProductCategoryDao productCategoryDao;
+    private final SupplierDao supplierDao;
 
     public ProductService(ProductDao productDao, ProductCategoryDao productCategoryDao, SupplierDao supplierDao) {
         this.productDao = productDao;
@@ -43,5 +43,8 @@ public class ProductService{
         return productDao.getByOne(name);
     }
 
+    public  List<Product> getAllProducts() {
+        return productDao.getAll();
+    }
 
 }
