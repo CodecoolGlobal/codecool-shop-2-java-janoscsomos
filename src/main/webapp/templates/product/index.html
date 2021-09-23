@@ -27,8 +27,9 @@
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/sidebar.css"/>
     <link rel="icon" href="/static/img/banana_favicon.png">
-    <script src="../../static/js/handleSideBar.js" defer></script>
-    <script src="../../static/js/sideBarFilter.js" defer></script>
+
+    <script type="module" src="../../static/js/controller.js"></script>
+
 </head>
 
 <body>
@@ -113,7 +114,7 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success add-to-cart" th:id="${prod.name}" href="#">Add to cart</a>
                     </div>
                 </div>
             </div>
@@ -131,4 +132,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 <!-- Custom scripts-->
 </body>
+
 </html>
