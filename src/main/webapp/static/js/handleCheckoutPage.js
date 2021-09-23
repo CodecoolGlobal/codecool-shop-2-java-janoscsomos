@@ -12,6 +12,9 @@ checkoutButton.addEventListener("click", checkoutButtonHandler);
 
 let logOutput = [];
 let orderOutput = [];
+let orderId = document.getElementsByClassName("orderId")[0].id;
+orderOutput.push("Order ID: " + orderId);
+localStorage.setItem("orderId", orderId);
 
 getCart().then(data => {console.log(data);});
 
@@ -49,10 +52,7 @@ async function checkoutButtonHandler(e) {
     apiGet("http://0.0.0.0:8888/api/adminlog", logOutput, "logoutput");
     if (fieldChecker()) {
         await getCart().then(data =>  {
-            console.log(data);
-            let orderId = document.getElementsByClassName("orderId")[0].id;
-            orderOutput.push("Order ID: " + orderId);
-            //let customerName =
+
             let customerEmail = document.getElementById("email").value;
             orderOutput.push("Customer email address: " + customerEmail);
             for (let item of data) {
