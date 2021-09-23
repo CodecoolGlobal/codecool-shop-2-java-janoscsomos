@@ -1,6 +1,7 @@
 import {removeItemExport} from "./removeItem.js";
 import {getCartContentCard, getRecommendedItemCard} from "./htmlFactory.js";
 import {changeQuantityExport} from "./changeQuantity.js";
+import {getTotalPayableExport} from "./getTotalPayable.js";
 import {apiGet} from "./fetcher.js";
 
 export function fillModalExport() {fillModal();}
@@ -21,6 +22,7 @@ function fillModal() {
             }
             removeItemExport();
             changeQuantityExport();
+            getTotalPayableExport();
             getRecommendedItems().then(() => {return null;});
         }));
 }
