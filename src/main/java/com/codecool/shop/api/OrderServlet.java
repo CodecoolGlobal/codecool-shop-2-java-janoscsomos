@@ -21,6 +21,7 @@ public class OrderServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        System.out.println("payload: " + payload);
     }
 
 }

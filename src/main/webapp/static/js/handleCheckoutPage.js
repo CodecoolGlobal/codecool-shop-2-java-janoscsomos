@@ -11,9 +11,8 @@ checkoutButton.addEventListener("click", checkoutButtonHandler);
 
 
 let logOutput = [];
-let orderOutput = [];
 
-console.log(document.getElementsByClassName("orderId"));
+
 
 
 function fieldHandler(e) {
@@ -33,15 +32,20 @@ function fieldLog() {
     }
 }
 
-function getOrderDetails() {
-    let cart;
-    getCart().then(data => cart = data).then(() => console.log(cart));
-    let orderId = document.getElementsByClassName("orderId");
-    //let customerName =
-    let customerEmail = document.getElementById("email").value;
-    //let orderedItems =
-    //let totalSum =
-    orderOutput.push(customerEmail);
+async function getOrderDetails() {
+    await getCart().then(data =>  {
+        let orderOutput = [];
+        //let orderId = document.getElementsByClassName("orderId")[0].id;
+        //let customerName =
+        let customerEmail = document.getElementById("email").value;
+        orderOutput.push(customerEmail);
+        let orderedItems = [];
+        //let totalSum;
+        for (let item of data) {
+            orderedItems.push(item['name']);
+        }
+        return orderOutput;
+    })
 }
 
 function fieldChecker() {
@@ -58,8 +62,9 @@ function checkoutButtonHandler(e) {
     fieldLog();
     apiGet("http://0.0.0.0:8888/api/adminlog", logOutput, "logoutput");
     if (fieldChecker()) {
-        getOrderDetails();
-        apiGet("http://0.0.0.0:8888/api/order", orderOutput, "order");
+        let order;
+        getOrderDetails().then(data => {order = data});
+        apiGet("http://0.0.0.0:8888/api/order", order, "order");
     }
 }
 
