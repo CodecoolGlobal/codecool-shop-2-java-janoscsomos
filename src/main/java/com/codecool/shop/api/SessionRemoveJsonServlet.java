@@ -34,6 +34,8 @@ public class SessionRemoveJsonServlet  extends HttpServlet {
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
         HashMap<String, Integer> cart = (HashMap<String, Integer>) request.getSession().getAttribute("shoppingCart");
+        Product currentProduct = productService.getProductByName(request.getParameter("item"));
+        currentProduct.setAmount(1);
         cart.remove(request.getParameter("item"));
         List<Product> output = new LinkedList<>();
         for (String product : cart.keySet()) {
