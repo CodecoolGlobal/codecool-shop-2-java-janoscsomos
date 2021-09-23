@@ -10,6 +10,6 @@ function getTotalPayable() {
                 let currentAmount = parseFloat(product.amount) * parseFloat(product.defaultPrice);
                 finalAmount += currentAmount;
             }
-            totalPayableAmount.innerText = finalAmount.toString();
+            totalPayableAmount.innerText = "Total amount: " +finalAmount.toFixed(2).toString() + " $";
         })
 }

@@ -1,6 +1,8 @@
 export function removeItemExport() {removeItem();}
 
 import {getCartContentCard} from "./htmlFactory.js";
+import {getTotalPayableExport} from "./getTotalPayable.js";
+import {changeQuantityExport} from "./changeQuantity.js";
 
 function removeItem() {
     const removeButtons = document.getElementsByClassName('remove-item-from-cart');
@@ -20,6 +22,9 @@ function removeItem() {
                         cartItemContainer.innerHTML = newContent;
                     }
                     removeItem();
+                    getTotalPayableExport();
+                    changeQuantityExport();
+
                 })
         })
     }
