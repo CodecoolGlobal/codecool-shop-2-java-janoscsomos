@@ -46,6 +46,7 @@ public class Initializer implements ServletContextListener {
 
 
         //setting up a new product category
+        ProductCategory allProducts = new ProductCategory("All products", "All", "The list of all products.");
         ProductCategory variants = new ProductCategory("Banana variants", "Basics", "Bananas in all shapes and sizes.");
         ProductCategory specialOffers = new ProductCategory("Special Offers", "Basics", "Bananas for special needs.");
         ProductCategory ingredients = new ProductCategory("Ingredients", "Food", "Banana is not just about the fruit, here you can find other parts that can be used in foods.");
@@ -53,6 +54,7 @@ public class Initializer implements ServletContextListener {
         ProductCategory foods = new ProductCategory("Banana foods", "Food", "Wide selection of banana based dishes, desserts and sweets.");
         ProductCategory merchandise = new ProductCategory("Merchandise", "Merchandise", "All kinds of banana-themed fun stuff from plushes to apparel.");
         ProductCategory miscellaneous = new ProductCategory("Miscellaneous", "Miscellaneous", "Haven't found what you're looking for anywhere else? Try here!");
+        productCategoryDataStore.add(allProducts);
         productCategoryDataStore.add(foods);
         productCategoryDataStore.add(variants);
         productCategoryDataStore.add(cultivation);
