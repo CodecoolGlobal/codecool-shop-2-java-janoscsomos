@@ -15,7 +15,7 @@ function removeItem() {
                         newContent += getCartContentCard(product);
                     }
                     if (newContent === "") {
-                        cartItemContainer.innerHTML = "No item selected yet!";
+                        cartItemContainer.innerHTML = '<h3>No item selected</h3><br><hr>';
                     } else {
                         cartItemContainer.innerHTML = newContent;
                     }

@@ -13,7 +13,11 @@ function fillModal() {
             for (let product of data) {
                 newContent += getCartContentCard(product);
             }
-            cartItemContainer.innerHTML = newContent;
+            if (newContent === "") {
+                cartItemContainer.innerHTML = '<h3>No item selected</h3><br><hr>';
+            } else {
+                cartItemContainer.innerHTML = newContent;
+            }
             removeItemExport();
             changeQuantityExport();
         }));
