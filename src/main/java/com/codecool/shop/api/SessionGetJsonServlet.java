@@ -6,6 +6,7 @@ import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ShoppingCart;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
@@ -18,15 +19,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.LinkedList;
+import java.util.List;
 
 
 @WebServlet(name = "SessionGetJsonServlet", urlPatterns = "/api/session/get")
 public class SessionGetJsonServlet  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
@@ -35,11 +37,13 @@ public class SessionGetJsonServlet  extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
-        String categoryId = request.getParameter("category");
-        String current = "";
+        HashMap<String, Integer> cart = (HashMap<String, Integer>) request.getSession().getAttribute("shoppingCart");
+        List<Product> output = new LinkedList<>();
+        for (String product : cart.keySet()) {
 
-        //ShoppingCart shoppingCart = (ShoppingCart) request.getSession().getAttribute("cart");
-
-        out.println((request.getSession().getAttribute("shoppingCart")));
+            System.out.println(product);
+            output.add(productService.getProductByName(product));
+        }
+        out.println(gson.toJson(output));
     }
 }
