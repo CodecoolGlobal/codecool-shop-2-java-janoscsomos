@@ -9,6 +9,7 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,11 +21,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-@WebServlet(name = "SessionGetJsonServlet", urlPatterns = "/api/session/get")
-public class SessionGetJsonServlet  extends HttpServlet {
+@WebServlet(name = "SessionRemoveJsonServlet", urlPatterns = "/api/session/remove")
+public class SessionRemoveJsonServlet  extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
@@ -34,17 +34,8 @@ public class SessionGetJsonServlet  extends HttpServlet {
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
         HashMap<String, Integer> cart = (HashMap<String, Integer>) request.getSession().getAttribute("shoppingCart");
+        cart.remove(request.getParameter("item"));
         List<Product> output = new LinkedList<>();
-        try {
-            extractProducts(out, gson, productService, cart, output);
-        } catch (NullPointerException error) {
-            HashMap<String, Integer> newCart = new HashMap<>();
-            request.getSession().setAttribute("shoppingCart", newCart);
-            extractProducts(out, gson, productService, newCart, output);
-        }
-    }
-
-    private void extractProducts(PrintWriter out, Gson gson, ProductService productService, HashMap<String, Integer> cart, List<Product> output) {
         for (String product : cart.keySet()) {
             output.add(productService.getProductByName(product));
         }
