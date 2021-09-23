@@ -95,9 +95,15 @@
     }
 }
 
-.btn-primary {
+.btn-primary, .add-to-cart {
     background-color: #e8c500;
     border-color: #ffe968;
     color: black;
     box-shadow: none;
+}
+
+.add-to-cart:hover, .add-to-cart:active {
+    background-color: black;
+    color: #e8c500;
+    border-color: #ffe968;
 }

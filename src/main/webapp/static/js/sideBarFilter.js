@@ -1,3 +1,5 @@
+import {apiGet} from "./fetcher.js";
+
 export function sidebarFilterExport () {sidebarFilter().then(() => {return null;})}
 import {addToCartExport} from "./addToCart.js";
 import {getNormalProductCard} from "./htmlFactory.js";
@@ -25,7 +27,8 @@ async function sidebarFilter () {
     )
     });
     addLinkEventListeners(supplierMenuButtons, menuNameContainer, urlSupplier, cardContainer);
-    addLinkEventListeners(categoryMenuButtons, menuNameContainer, urlCategory, cardContainer)
+    addLinkEventListeners(categoryMenuButtons, menuNameContainer, urlCategory, cardContainer);
+    filterForAllProducts(cardContainer);
 }
 
 function addLinkEventListeners(menuButtons, menuNameContainer, url, cardContainer) {
@@ -45,5 +48,22 @@ function addLinkEventListeners(menuButtons, menuNameContainer, url, cardContaine
     }
 }
 
+function chooseRightLink(allProductLink) {
+    for (let link of document.querySelectorAll(".category-menu-element"))
+        if (link.textContent === "All products") allProductLink = link;
+    return allProductLink;
+}
 
-
+function filterForAllProducts(cardContainer) {
+    let allProductLink = null;
+    allProductLink = chooseRightLink(allProductLink);
+    allProductLink.addEventListener("click", async () => {
+            let data = await apiGet("/api/session/recommend");
+            let newContent = "";
+            for (let product of data) {
+                newContent += getNormalProductCard(product);
+            }
+            cardContainer.innerHTML = newContent;
+        }
+    );
+}
