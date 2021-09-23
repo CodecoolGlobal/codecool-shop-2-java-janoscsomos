@@ -22,3 +22,7 @@ function fillModal() {
             changeQuantityExport();
         }));
 }
+
+function getRecommendedItems() {
+
+}
