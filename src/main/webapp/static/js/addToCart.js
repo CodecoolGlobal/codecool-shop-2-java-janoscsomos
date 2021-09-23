@@ -1,3 +1,5 @@
+import {getRecommendedItems} from "./fillModal.js";
+
 export function addToCartExport () {addToCart()}
 
 import {fillModalExport} from "./fillModal.js";
@@ -8,8 +10,11 @@ function addToCart() {
         addToCartButton.addEventListener('click', (e) => {
             e.preventDefault();
             fetch(`/api/session/add?productName=${addToCartButton.id}`).then(
-                () => {fillModalExport();}
+                () => {
+                    fillModalExport();
+                }
             );
+            getRecommendedItems().then(() => {return null;});
         });
     }
 }

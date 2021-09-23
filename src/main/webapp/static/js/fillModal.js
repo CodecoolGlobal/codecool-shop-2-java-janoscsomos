@@ -23,11 +23,10 @@ function fillModal() {
             removeItemExport();
             changeQuantityExport();
             getTotalPayableExport();
-            getRecommendedItems().then(() => {return null;});
         }));
 }
 
-async function getRecommendedItems() {
+export async function getRecommendedItems() {
     let data = await apiGet("/api/session/recommend");
     const container = document.querySelector(".row");
     const amountOfRecommendedItems = 4;
