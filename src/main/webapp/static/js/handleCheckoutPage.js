@@ -13,8 +13,7 @@ checkoutButton.addEventListener("click", checkoutButtonHandler);
 let logOutput = [];
 let orderOutput = [];
 
-let cart = getCart();
-console.log(cart);
+console.log(document.getElementsByClassName("orderId"));
 
 
 function fieldHandler(e) {
@@ -35,7 +34,9 @@ function fieldLog() {
 }
 
 function getOrderDetails() {
-    //let orderId =
+    let cart;
+    getCart().then(data => cart = data).then(() => console.log(cart));
+    let orderId = document.getElementsByClassName("orderId");
     //let customerName =
     let customerEmail = document.getElementById("email").value;
     //let orderedItems =
