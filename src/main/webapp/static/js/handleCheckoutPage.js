@@ -66,8 +66,8 @@ async function checkoutButtonHandler(e) {
             return null;
         })
         apiGet("http://0.0.0.0:8888/api/order", orderOutput, "order");
+        window.location.href="http://0.0.0.0:8888/order_confirmation";
     }
-    window.location.href="http://0.0.0.0:8888/order_confirmation";
 }
 
 
