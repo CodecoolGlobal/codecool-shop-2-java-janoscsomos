@@ -1,6 +1,7 @@
 import {removeItemExport} from "./removeItem.js";
 import {getCartContentCard} from "./htmlFactory.js";
 import {changeQuantityExport} from "./changeQuantity.js";
+import {getTotalPayableExport} from "./getTotalPayable.js";
 
 export function fillModalExport() {fillModal();}
 
@@ -13,8 +14,13 @@ function fillModal() {
             for (let product of data) {
                 newContent += getCartContentCard(product);
             }
-            cartItemContainer.innerHTML = newContent;
+            if (newContent === "") {
+                cartItemContainer.innerHTML = '<h3>No item selected</h3><br><hr>';
+            } else {
+                cartItemContainer.innerHTML = newContent;
+            }
             removeItemExport();
             changeQuantityExport();
+            getTotalPayableExport();
         }));
 }
