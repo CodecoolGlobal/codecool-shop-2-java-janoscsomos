@@ -67,7 +67,9 @@ async function checkoutButtonHandler(e) {
         })
         apiGet("http://0.0.0.0:8888/api/order", orderOutput, "order");
     }
+    window.location.href="http://0.0.0.0:8888/order_confirmation";
 }
+
 
 
 async function apiGet(url, payload, queryArgument) {
