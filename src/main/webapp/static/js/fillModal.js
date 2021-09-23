@@ -1,6 +1,7 @@
 import {removeItemExport} from "./removeItem.js";
 import {getCartContentCard} from "./htmlFactory.js";
 import {changeQuantityExport} from "./changeQuantity.js";
+import {getTotalPayableExport} from "./getTotalPayable.js";
 
 export function fillModalExport() {fillModal();}
 
@@ -20,5 +21,6 @@ function fillModal() {
             }
             removeItemExport();
             changeQuantityExport();
+            getTotalPayableExport();
         }));
 }
