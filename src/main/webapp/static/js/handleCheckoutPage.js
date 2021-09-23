@@ -11,8 +11,9 @@ checkoutButton.addEventListener("click", checkoutButtonHandler);
 
 
 let logOutput = [];
+let orderOutput = [];
 
-
+getCart().then(data => {console.log(data);});
 
 
 function fieldHandler(e) {
@@ -32,21 +33,6 @@ function fieldLog() {
     }
 }
 
-async function getOrderDetails() {
-    await getCart().then(data =>  {
-        let orderOutput = [];
-        //let orderId = document.getElementsByClassName("orderId")[0].id;
-        //let customerName =
-        let customerEmail = document.getElementById("email").value;
-        orderOutput.push(customerEmail);
-        let orderedItems = [];
-        //let totalSum;
-        for (let item of data) {
-            orderedItems.push(item['name']);
-        }
-        return orderOutput;
-    })
-}
 
 function fieldChecker() {
     let allOkay = true;
@@ -58,13 +44,28 @@ function fieldChecker() {
     return allOkay;
 }
 
-function checkoutButtonHandler(e) {
+async function checkoutButtonHandler(e) {
     fieldLog();
     apiGet("http://0.0.0.0:8888/api/adminlog", logOutput, "logoutput");
     if (fieldChecker()) {
-        let order;
-        getOrderDetails().then(data => {order = data});
-        apiGet("http://0.0.0.0:8888/api/order", order, "order");
+        await getCart().then(data =>  {
+            console.log(data);
+            let orderId = document.getElementsByClassName("orderId")[0].id;
+            orderOutput.push("Order ID: " + orderId);
+            //let customerName =
+            let customerEmail = document.getElementById("email").value;
+            orderOutput.push("Customer email address: " + customerEmail);
+            for (let item of data) {
+                orderOutput.push("Ordered item: " + item['name']);
+            }
+            let totalSum = 0;
+            for (let item of data) {
+                totalSum += parseFloat(item['defaultPrice']);
+            }
+            orderOutput.push("Total amount: " + totalSum + " USD");
+            return null;
+        })
+        apiGet("http://0.0.0.0:8888/api/order", orderOutput, "order");
     }
 }
 
