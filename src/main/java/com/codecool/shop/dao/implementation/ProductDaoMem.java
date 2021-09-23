@@ -78,6 +78,4 @@ public class ProductDaoMem implements ProductDao {
     public Product getByOne(String name) {
         return data.stream().filter(t -> t.getName().equals(name)).findFirst().orElse(null);
     }
-
-
 }
