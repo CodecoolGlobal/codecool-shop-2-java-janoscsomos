@@ -18,6 +18,18 @@
     color: black;
     text-align: center;
 }
+#number-cart-contains {
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    padding: 1px;
+    background: red;
+    color: white;
+    text-align: center;
+    font: 14px Arial, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .card {
     margin-bottom: 15px;
