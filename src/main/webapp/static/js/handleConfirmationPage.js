@@ -1,4 +1,6 @@
 getCart().then(data => {
+    let idP = document.getElementById("order-id");
+    idP.textContent = "Order ID: " + localStorage.getItem("orderId");
     let detailsDiv = document.getElementById("order-details");
     let totalSum = 0;
     for (let item of data) {
