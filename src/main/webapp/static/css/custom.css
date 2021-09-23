@@ -95,15 +95,23 @@
     }
 }
 
-.btn-primary, .add-to-cart {
+.btn-primary, .add-to-cart, .order-button {
     background-color: #e8c500;
     border-color: #ffe968;
     color: black;
     box-shadow: none;
 }
 
-.add-to-cart:hover, .add-to-cart:active {
+.add-to-cart:hover, .add-to-cart:active,
+.order-button:hover {
     background-color: black;
     color: #e8c500;
     border-color: #ffe968;
+}
+
+#sleepy-cat {
+    height: 400px;
+    margin-left: 33%;
+    margin-top: -2%;
+    position: absolute;
 }
