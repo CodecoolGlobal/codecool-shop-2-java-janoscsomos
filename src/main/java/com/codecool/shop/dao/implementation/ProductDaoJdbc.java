@@ -6,6 +6,11 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDaoJdbc implements ProductDao {
@@ -43,7 +48,26 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public List<Product> getAll() {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT products.id, products.product_name, products.price, products.currency, " +
+                    "products.product_description, category.category_name, category.department, category.category_description, " +
+                    "supplier.supplier_name, supplier.supplier_description" +
+                    "FROM products" +
+                    "FULL JOIN category ON category.id = products.category_id" +
+                    "FULL JOIN supplier ON supplier.id = products.supplier_id";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            List<Product> result = new ArrayList<>();
+            while (rs.next()) {
+                ProductCategory productCategory = new ProductCategory(rs.getString(6), rs.getString(7), rs.getString(8));
+                Supplier supplier = new Supplier(rs.getString(9), rs.getString(10));
+                Product product = new Product(rs.getString(2), rs.getBigDecimal(3), rs.getString(4), rs.getString(5), productCategory, supplier);
+                product.setId(rs.getInt(1));
+                result.add(product);
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading all authors", e);
+        }
     }
 
     @Override

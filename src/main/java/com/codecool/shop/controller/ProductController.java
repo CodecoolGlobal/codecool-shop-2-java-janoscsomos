@@ -45,8 +45,8 @@ public class ProductController extends HttpServlet {
 
         ProductDao productDataStore = new ProductDaoJdbc(dataSource);
         ProductCategoryDao productCategoryDataStore = new ProductCategoryDaoJdbc(dataSource);
-        SupplierDao supplierDao = new SupplierDaoJdbc(dataSource);
-        ProductServiceDB productServiceDB = new ProductServiceDB(productDataStore, productCategoryDataStore, supplierDao);
+        SupplierDao supplierDataStore = new SupplierDaoJdbc(dataSource);
+        ProductServiceDB productServiceDB = new ProductServiceDB(productDataStore, productCategoryDataStore, supplierDataStore);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -54,9 +54,14 @@ public class ProductController extends HttpServlet {
         //context.setVariable("category", productService.getProductCategory(1));
         context.setVariable("category", productServiceDB.getProductCategory(1));
 
-        context.setVariable("products", productService.getAllProducts());
+        //context.setVariable("products", productService.getAllProducts());
+        context.setVariable("products", productServiceDB.getAllProducts());
+
+        //context.setVariable("allCategory", productCategoryDataStore.getAll());
         context.setVariable("allCategory", productCategoryDataStore.getAll());
-        context.setVariable("allSuppliers", supplierDaoMem.getAll());
+
+        //context.setVariable("allSuppliers", supplierDaoMem.getAll());
+        context.setVariable("allSuppliers", supplierDataStore.getAll());
         //Hashtable<String, Integer> cart = new Hashtable<>();
 
         /*
