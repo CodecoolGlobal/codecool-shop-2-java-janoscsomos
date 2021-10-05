@@ -16,9 +16,9 @@ public class DatabaseManager {
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
-        //productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
-        //productDao = new ProductDaoJdbc(dataSource);
-        //supplierDao = new SupplierDaoJdbc(dataSource);
+        productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
+        productDao = new ProductDaoJdbc(dataSource);
+        supplierDao = new SupplierDaoJdbc(dataSource);
     }
 
 
