@@ -20,7 +20,11 @@ public class ProductService{
     }
 
     public ProductCategory getProductCategory(int categoryId){
-        return productCategoryDao.find(categoryId);
+        ProductCategory outputCategory = productCategoryDao.find(categoryId);
+        if (outputCategory != null)
+            return outputCategory;
+        else
+            throw new IllegalArgumentException("Non existent category with this ID!");
     }
 
     public List<Product> getProductsForSupplier(int supplierId){
@@ -43,7 +47,7 @@ public class ProductService{
         return productDao.getByOne(name);
     }
 
-    public  List<Product> getAllProducts() {
+    public List<Product> getAllProducts() {
         return productDao.getAll();
     }
 
