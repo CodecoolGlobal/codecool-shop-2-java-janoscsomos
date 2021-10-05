@@ -5,6 +5,7 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +18,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductServiceTest {
+    private final int initialIndex = 0;
+    private final int impossibleIndex = 1000;
+
     public ProductService productService;
     public ProductCategory mockCategory;
+    public Product mockProduct;
+    public Supplier mockSupplier;
 
     public ProductCategoryDaoMem categoryDaoMem;
     public ProductDaoMem productDaoMem;
@@ -27,6 +33,9 @@ class ProductServiceTest {
     @BeforeEach
     void build() {
         mockCategory = Mockito.mock(ProductCategory.class);
+        mockProduct = Mockito.mock(Product.class);
+        mockSupplier = Mockito.mock(Supplier.class);
+
         categoryDaoMem = ProductCategoryDaoMem.getInstance();
         productDaoMem = ProductDaoMem.getInstance();
         supplierDaoMem = SupplierDaoMem.getInstance();
@@ -38,7 +47,7 @@ class ProductServiceTest {
         // Add mock category to category DAO:
         categoryDaoMem.add(mockCategory);
         // Assert:
-        assertEquals(mockCategory, productService.getProductCategory(0));
+        assertEquals(mockCategory, productService.getProductCategory(initialIndex));
     }
 
     @Test
@@ -46,7 +55,7 @@ class ProductServiceTest {
         // Assert for exception check:
         assertThrows(
                 IllegalArgumentException.class,
-                () -> productService.getProductCategory(1000)
+                () -> productService.getProductCategory(impossibleIndex)
         );
     }
 
@@ -55,31 +64,50 @@ class ProductServiceTest {
         // Add mock category to category DAO:
         categoryDaoMem.add(mockCategory);
         // Create and add mock Product to product DAO:
-        Product mockProduct = Mockito.mock(Product.class);
         Mockito.when(mockProduct.getProductCategory()).thenReturn(mockCategory);
         productDaoMem.add(mockProduct);
         // Created expectation:
         List<Product> expected = new LinkedList<>();
         expected.add(mockProduct);
         // Assert:
-        assertEquals(expected, productService.getProductsForCategory(0));
+        assertEquals(expected, productService.getProductsForCategory(initialIndex));
     }
 
     @Test
     void getProductsForCategory_throwsIllegalArgumentExceptionWithNonExistingCategory() {
         // Adding mock item to the product Dao:
-        Product mockProduct = Mockito.mock(Product.class);
         Mockito.when(mockProduct.getProductCategory()).thenReturn(mockCategory);
         productDaoMem.add(mockProduct);
         // Running search without adding the product category to the relevant DaoMem:
         assertThrows(
                 IllegalArgumentException.class,
-                () -> productService.getProductsForCategory(0)
+                () -> productService.getProductsForCategory(initialIndex)
         );
     }
 
     @Test
-    void getProductsForSupplier() {
+    void getProductsForSupplier_returnsTheRightProductListWithExistingSupplier() {
+        supplierDaoMem.add(mockSupplier);
+        // Adding mock item to the product Dao and set its supplier:
+        Mockito.when(mockProduct.getSupplier()).thenReturn(mockSupplier);
+        productDaoMem.add(mockProduct);
+        // Build expectation:
+        List<Product> expected = new LinkedList<>();
+        expected.add(mockProduct);
+        // Running search with mocked supplier:
+        assertEquals(expected, productService.getProductsForSupplier(initialIndex));
+    }
+
+    @Test
+    void getProductsForSupplier_throwsIllegalArgumentExceptionWithNonExistentSupplier() {
+        // Adding mock item to the product Dao and set its supplier:
+        Mockito.when(mockProduct.getSupplier()).thenReturn(mockSupplier);
+        productDaoMem.add(mockProduct);
+        // Assert without adding supplier to relevant Dao:
+        assertThrows(
+                NullPointerException.class,
+                () -> productService.getProductsForCategory(initialIndex)
+        );
     }
 
     @Test
@@ -96,8 +124,9 @@ class ProductServiceTest {
 
     @AfterEach
     void tearDown() {
-        categoryDaoMem.remove(0);
-        productDaoMem.remove(0);
+        categoryDaoMem.remove(initialIndex);
+        productDaoMem.remove(initialIndex);
+        supplierDaoMem.remove(initialIndex);
     }
 
     @AfterAll
