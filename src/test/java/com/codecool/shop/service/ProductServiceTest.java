@@ -33,13 +33,15 @@ class ProductServiceTest {
 
     @BeforeEach
     void build() {
+        //Mocking classes:
         mockCategory = Mockito.mock(ProductCategory.class);
         mockProduct = Mockito.mock(Product.class);
         mockSupplier = Mockito.mock(Supplier.class);
-
+        // Get instance of containers:
         categoryDaoMem = ProductCategoryDaoMem.getInstance();
         productDaoMem = ProductDaoMem.getInstance();
         supplierDaoMem = SupplierDaoMem.getInstance();
+        // Instantiate ProductService:
         productService = new ProductService(productDaoMem, categoryDaoMem, supplierDaoMem);
     }
 
@@ -76,7 +78,7 @@ class ProductServiceTest {
 
     @Test
     void getProductsForCategory_throwsIllegalArgumentExceptionWithNonExistingCategory() {
-        // Adding mock item to the product Dao:
+        // Adding mock item to the product Dao and mock its category's getter:
         Mockito.when(mockProduct.getProductCategory()).thenReturn(mockCategory);
         productDaoMem.add(mockProduct);
         // Running search without adding the product category to the relevant DaoMem:
@@ -113,7 +115,7 @@ class ProductServiceTest {
 
     @Test
     void getProductsByName() {
-        // Set product name and add it to memory:
+        // Set product's name and add it to memory:
         Mockito.when(mockProduct.getName()).thenReturn(nameToSearchFor);
         productDaoMem.add(mockProduct);
         // Add additional product:
@@ -131,7 +133,6 @@ class ProductServiceTest {
     @Test
     void getProductByName() {
         // Set product name and add it to memory:
-        System.out.println(productService.getAllProducts().size());
         Mockito.when(mockProduct.getName()).thenReturn(nameToSearchFor);
         productDaoMem.add(mockProduct);
         // Assert:
@@ -141,13 +142,16 @@ class ProductServiceTest {
     @Test
     void getAllProducts() {
         productDaoMem.add(mockProduct);
-        // Add additional product:
+        // Add additional products:
         Product mockProduct2 = Mockito.mock(Product.class);
         productDaoMem.add(mockProduct2);
+        Product mockProduct3 = Mockito.mock(Product.class);
+        productDaoMem.add(mockProduct3);
         // Set expectation:
         List<Product> expected = new LinkedList<>();
         expected.add(mockProduct);
         expected.add(mockProduct2);
+        expected.add(mockProduct3);
         // Assert:
         assertEquals(expected, productService.getAllProducts());
     }
@@ -156,14 +160,10 @@ class ProductServiceTest {
     void tearDown() {
         // Remove category from its DaoMem:
         categoryDaoMem.getAll().clear();
-        // Remove products from their from DaoMem:
+        // Remove product(s) from their from DaoMem:
         productDaoMem.getAll().clear();
         // Remove supplier from its DaoMem:
         supplierDaoMem.getAll().clear();
-        // Reset mocked items:
-        mockSupplier = null;
-        mockProduct = null;
-        mockCategory = null;
     }
 
     @AfterAll
