@@ -22,7 +22,7 @@ public class DatabaseManager {
     }
 
 
-    private DataSource connect() throws SQLException {
+    public DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         String dbName = System.getenv("PSQL_DB_NAME");
         String user = System.getenv("PSQL_USER_NAME");
