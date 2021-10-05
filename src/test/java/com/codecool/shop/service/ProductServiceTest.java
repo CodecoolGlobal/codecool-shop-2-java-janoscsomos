@@ -21,12 +21,12 @@ class ProductServiceTest {
     private final int initialIndex = 0;
     private final int impossibleIndex = 1000;
     private final String nameToSearchFor = "banana";
-
+    // Declare classes to test or mock:
     public ProductService productService;
     public ProductCategory mockCategory;
     public Product mockProduct;
     public Supplier mockSupplier;
-
+    // Declare Dao classes:
     public ProductCategoryDaoMem categoryDaoMem;
     public ProductDaoMem productDaoMem;
     public SupplierDaoMem supplierDaoMem;
@@ -115,12 +115,16 @@ class ProductServiceTest {
 
     @Test
     void getProductsByName() {
-        // Set product's name and add it to memory:
-        Mockito.when(mockProduct.getName()).thenReturn(nameToSearchFor);
+        // Set first product's name and add it to memory:
+        Mockito.when(mockProduct.getName()).thenReturn(nameToSearchFor + " boat");
         productDaoMem.add(mockProduct);
         // Add additional product:
         Product mockProduct2 = Mockito.mock(Product.class);
-        Mockito.when(mockProduct2.getName()).thenReturn(nameToSearchFor);
+        Mockito.when(mockProduct2.getName()).thenReturn(
+                nameToSearchFor.substring(0, 1).toUpperCase() +
+                        nameToSearchFor.substring(1) +
+                        " Joe"
+        );
         productDaoMem.add(mockProduct2);
         // Set expectation:
         List<Product> expected = new LinkedList<>();
