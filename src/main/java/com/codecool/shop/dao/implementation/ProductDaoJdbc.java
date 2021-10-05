@@ -66,7 +66,7 @@ public class ProductDaoJdbc implements ProductDao {
             }
             return result;
         } catch (SQLException e) {
-            throw new RuntimeException("Error while reading all authors", e);
+            throw new RuntimeException("Error while reading all products", e);
         }
     }
 

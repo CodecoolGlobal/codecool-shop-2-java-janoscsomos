@@ -1,13 +1,16 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategoryDaoJdbc implements ProductCategoryDao {
@@ -61,6 +64,18 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
     @Override
     public List<ProductCategory> getAll() {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, category_name, department, category_description FROM category";
+            ResultSet rs = conn.createStatement().executeQuery(sql);
+            List<ProductCategory> result = new ArrayList<>();
+            while (rs.next()) {
+                ProductCategory productCategory = new ProductCategory(rs.getString(2), rs.getString(3), rs.getString(4));
+                productCategory.setId(rs.getInt(1));
+                result.add(productCategory);
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading all categories", e);
+        }
     }
 }
