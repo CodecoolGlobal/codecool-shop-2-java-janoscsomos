@@ -9,6 +9,9 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,8 @@ import java.util.List;
 
 @WebServlet(name = "SessionGetJsonServlet", urlPatterns = "/api/session/get")
 public class SessionGetJsonServlet  extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(SessionGetJsonServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -41,6 +46,7 @@ public class SessionGetJsonServlet  extends HttpServlet {
             HashMap<String, Integer> newCart = new HashMap<>();
             request.getSession().setAttribute("shoppingCart", newCart);
             extractProducts(out, gson, productService, newCart, output);
+            logger.error("NullpointerException on servlet: {}", "SessionGetJsonServlet");
         }
     }
 
