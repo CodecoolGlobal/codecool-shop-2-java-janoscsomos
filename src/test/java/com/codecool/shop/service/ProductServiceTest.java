@@ -27,11 +27,9 @@ class ProductServiceTest {
     @BeforeEach
     void build() {
         mockCategory = Mockito.mock(ProductCategory.class);
-
         categoryDaoMem = ProductCategoryDaoMem.getInstance();
         productDaoMem = ProductDaoMem.getInstance();
         supplierDaoMem = SupplierDaoMem.getInstance();
-
         productService = new ProductService(productDaoMem, categoryDaoMem, supplierDaoMem);
     }
 
@@ -53,7 +51,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void getProductsForCategory_returnsRightProductsWithCategory() {
+    void getProductsForCategory_returnsRightProductsWithExistingCategory() {
         // Add mock category to category DAO:
         categoryDaoMem.add(mockCategory);
         // Create and add mock Product to product DAO:
@@ -65,6 +63,19 @@ class ProductServiceTest {
         expected.add(mockProduct);
         // Assert:
         assertEquals(expected, productService.getProductsForCategory(0));
+    }
+
+    @Test
+    void getProductsForCategory_throwsIllegalArgumentExceptionWithNonExistingCategory() {
+        // Adding mock item to the product Dao:
+        Product mockProduct = Mockito.mock(Product.class);
+        Mockito.when(mockProduct.getProductCategory()).thenReturn(mockCategory);
+        productDaoMem.add(mockProduct);
+        // Running search without adding the product category to the relevant DaoMem:
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> productService.getProductsForCategory(0)
+        );
     }
 
     @Test
@@ -86,6 +97,7 @@ class ProductServiceTest {
     @AfterEach
     void tearDown() {
         categoryDaoMem.remove(0);
+        productDaoMem.remove(0);
     }
 
     @AfterAll

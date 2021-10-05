@@ -34,7 +34,10 @@ public class ProductService{
 
     public List<Product> getProductsForCategory(int categoryId){
         var category = productCategoryDao.find(categoryId);
-        return productDao.getBy(category);
+        List<Product> products = productDao.getBy(category);
+        if (products.size() > 0)
+            return productDao.getBy(category);
+        else throw new IllegalArgumentException("No products by this category!");
     }
 
     public List<Product> getProductsByName(String name){
