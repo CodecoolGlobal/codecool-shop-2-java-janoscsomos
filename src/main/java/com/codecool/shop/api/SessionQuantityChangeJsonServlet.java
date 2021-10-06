@@ -1,9 +1,11 @@
 
 package com.codecool.shop.api;
 
+import com.codecool.shop.dao.DatabaseManager;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.DataUtil;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
@@ -27,7 +29,13 @@ public class SessionQuantityChangeJsonServlet  extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
-        Product currentItem = productService.getProductByName(request.getParameter("item"));
+        // Singleton usage -->
+        //Product currentItem = productService.getProductByName(request.getParameter("item"));
+
+        // Database usage -->
+        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+        Product currentItem = databaseManager.getProductByName(request.getParameter("item"));
+        System.out.println(currentItem);
         if (request.getParameter("relation").equals("add")) {
             currentItem.setAmount(currentItem.getAmount() + 1);
         } else {

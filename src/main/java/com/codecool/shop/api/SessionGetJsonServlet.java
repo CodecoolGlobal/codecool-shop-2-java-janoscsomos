@@ -53,9 +53,17 @@ public class SessionGetJsonServlet  extends HttpServlet {
             HashMap<String, Integer> cart,
             List<Product> output
     ) {
+        /* Singleton usage -->
         for (String product : cart.keySet()) {
             output.add(productService.getProductByName(product));
         }
+         */ // Database usage -->
+        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+        for (String product : cart.keySet()) {
+            output.add(databaseManager.getProductByName(product));
+        }
+
+
         out.println(gson.toJson(output));
     }
 }
