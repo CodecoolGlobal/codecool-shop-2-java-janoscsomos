@@ -51,6 +51,11 @@ public class DatabaseManager {
         else throw new IllegalArgumentException("No products by this category!");
     }
 
+
+    public List<Product> getProductsByName(String name){
+        return productDao.getBy(name);
+    }
+
     public DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         String dbName = System.getenv("PSQL_DB_NAME");

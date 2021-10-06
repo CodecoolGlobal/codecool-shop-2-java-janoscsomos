@@ -1,8 +1,10 @@
 package com.codecool.shop.api;
 
+import com.codecool.shop.dao.DatabaseManager;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.DataUtil;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
@@ -31,7 +33,13 @@ public class NameSearchJsonServlet  extends HttpServlet {
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
         String namePart = request.getParameter("name");
-        out.println(gson.toJson(productService.getProductsByName(namePart)));
+
+        // Singleton usage -->
+        //out.println(gson.toJson(productService.getProductsByName(namePart)));
+
+        // Database usage -->
+        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+        out.println(gson.toJson(databaseManager.getProductsByName(namePart)));
     }
 }
 
