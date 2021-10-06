@@ -1,4 +1,5 @@
-package com.codecool.shop.api;
+package com.codecool.shop.dbapi;
+
 
 import com.codecool.shop.dao.DatabaseManager;
 import com.codecool.shop.dao.ProductCategoryDao;
@@ -11,20 +12,20 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 
-@WebServlet(name = "SessionGetJsonServlet", urlPatterns = "/api/session/get")
-public class SessionGetJsonServlet  extends HttpServlet {
+@WebServlet(name = "SessionDbGetJsonServlet", urlPatterns = "/api/session/get")
+public class SessionDbGetJsonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -32,30 +33,28 @@ public class SessionGetJsonServlet  extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
         HashMap<String, Integer> cart = (HashMap<String, Integer>) request.getSession().getAttribute("shoppingCart");
         List<Product> output = new LinkedList<>();
         try {
-            extractProducts(out, gson, productService, cart, output);
+            extractProducts(out, gson, cart, output);
         } catch (NullPointerException error) {
             HashMap<String, Integer> newCart = new HashMap<>();
             request.getSession().setAttribute("shoppingCart", newCart);
-            extractProducts(out, gson, productService, newCart, output);
+            extractProducts(out, gson, newCart, output);
         }
     }
 
     private void extractProducts(
             PrintWriter out,
-            Gson gson, ProductService productService,
+            Gson gson,
             HashMap<String, Integer> cart,
             List<Product> output
     ) {
+        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
         for (String product : cart.keySet()) {
-            output.add(productService.getProductByName(product));
+            output.add(databaseManager.getProductByName(product));
         }
         out.println(gson.toJson(output));
     }
 }
+

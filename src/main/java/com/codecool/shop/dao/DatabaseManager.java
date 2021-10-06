@@ -8,6 +8,7 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import org.postgresql.ds.PGSimpleDataSource;
 
+
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
@@ -25,6 +26,8 @@ public class DatabaseManager {
         productDao = new ProductDaoJdbc(dataSource);
         supplierDao = new SupplierDaoJdbc(dataSource);
     }
+
+    public Product getProductByName(String name) { return productDao.getByOne(name); }
 
     public ProductCategory findProductCategory(int id) { return productCategoryDao.find(id); }
 

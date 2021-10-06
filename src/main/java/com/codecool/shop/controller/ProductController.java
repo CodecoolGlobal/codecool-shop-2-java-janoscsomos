@@ -29,21 +29,17 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
         //ProductDao productDataStore = ProductDaoMem.getInstance();
         //ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         //SupplierDaoMem supplierDaoMem = SupplierDaoMem.getInstance();
         //ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDaoMem);
-
         DatabaseManager databaseManager = new DatabaseManager();
         try {
             databaseManager.setup();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
-
-
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
