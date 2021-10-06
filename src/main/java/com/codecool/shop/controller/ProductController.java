@@ -7,6 +7,8 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.config.TemplateEngineUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,6 +21,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
@@ -37,6 +40,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("products", productService.getAllProducts());
         context.setVariable("allCategory", productCategoryDataStore.getAll());
         context.setVariable("allSuppliers", supplierDaoMem.getAll());
+        logger.info("Get request on main page.");
         //Hashtable<String, Integer> cart = new Hashtable<>();
 
         /*

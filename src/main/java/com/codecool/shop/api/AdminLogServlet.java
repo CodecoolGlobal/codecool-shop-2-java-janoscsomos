@@ -1,5 +1,8 @@
 package com.codecool.shop.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +11,7 @@ import java.io.IOException;
 
 @WebServlet (urlPatterns = "/api/adminlog")
 public class AdminLogServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger((AdminLogServlet.class));
 
     LogIO logIO = new LogIO();
 
@@ -18,6 +22,7 @@ public class AdminLogServlet extends HttpServlet {
             logIO.exportLog(payload);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+            logger.error("ClassNotFound on servlet: {}", "AdminLogServlet");
         }
         System.out.println(payload);
     }
