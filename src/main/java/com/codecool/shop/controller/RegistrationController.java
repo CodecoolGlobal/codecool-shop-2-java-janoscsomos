@@ -18,6 +18,6 @@ public class RegistrationController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext context = new WebContext(request, response, request.getServletContext());
-        engine.process("product/registration.html", context, response.getWriter());
+        engine.process("product/registration_and_login.html", context, response.getWriter());
     }
 }

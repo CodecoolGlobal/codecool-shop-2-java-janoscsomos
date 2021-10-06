@@ -40,42 +40,9 @@
 
 <div class="wrapper">
     <!-- Sidebar -->
-    <nav id="sidebar" class="active">
-        <div class="sidebar-header">
-            <h3>Menu</h3>
-        </div>
-        <ul class="list-unstyled components">
-            <p>Filter Products</p>
-            <li>
-                <label id="search-by-name-label" style="margin-left: 10px"> Search by Name
-                    <input id="search-by-name">
-                </label>
-            </li>
-            <li>
-                <a id="suppliers" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    Filter by Supplier
-                </a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li th:each="supplier, iterStart: ${allSuppliers}">
-                        <a class="supplier-menu-element" th:id="${supplier.id}" href="#" th:text="${supplier.name}"></a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a id="categories" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    Filter by Category
-                </a>
-                <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li th:each="category,iterStat : ${allCategory}">
-                        <a class="category-menu-element" th:id="${category.id}" href="#" th:text="${category.name}" ></a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Contact</a>
-            </li>
-        </ul>
-    </nav>
+<nav id="sidebar" class="active">
+    <div th:replace="/fragments/sidebar.html :: copy"></div>
+</nav>
 
 <div class="container">
     <!-- Sidebar toggle button -->
@@ -102,7 +69,7 @@
     </button>
 
     <!-- Modal -->
-    <div th:replace="modal.html :: copy"></div>
+    <div th:replace="/fragments/modal.html :: copy"></div>
     <!-- Product card for each -->
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
@@ -129,7 +96,7 @@
 </div>
 </div>
  <!-- Footer -->
-<div th:replace="footer.html :: copy"></div>
+<div th:replace="/fragments/footer.html :: copy"></div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <!-- Popper.JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>

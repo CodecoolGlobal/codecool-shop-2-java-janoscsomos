@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!-- Sidebar -->
+<div th:fragment="copy">
+    <div class="sidebar-header">
+        <h3>Menu</h3>
+    </div>
+    <ul class="list-unstyled components">
+        <p>Filter Products</p>
+        <li>
+            <label id="search-by-name-label" style="margin-left: 10px"> Search by Name
+                <input id="search-by-name">
+            </label>
+        </li>
+        <li>
+            <a id="suppliers" href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                Filter by Supplier
+            </a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+                <li th:each="supplier, iterStart: ${allSuppliers}">
+                    <a class="supplier-menu-element" th:id="${supplier.id}" href="#" th:text="${supplier.name}"></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a id="categories" href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                Filter by Category
+            </a>
+            <ul class="collapse list-unstyled" id="pageSubmenu">
+                <li th:each="category,iterStat : ${allCategory}">
+                    <a class="category-menu-element" th:id="${category.id}" href="#" th:text="${category.name}" ></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Contact</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
