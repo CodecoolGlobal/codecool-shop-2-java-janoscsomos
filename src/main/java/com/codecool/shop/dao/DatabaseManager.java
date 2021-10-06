@@ -37,6 +37,15 @@ public class DatabaseManager {
 
     public List<Supplier> allSuppliers() {return supplierDao.getAll();}
 
+    public List<Product> getProductsForSupplier(int supplierId) {
+        var supplier = supplierDao.find(supplierId);
+        List<Product> output = productDao.getBy(supplier);
+        if (output.size() > 0) return output;
+        else throw new IllegalArgumentException("Non existent supplier name!");
+    }
+
+
+
     public DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         String dbName = System.getenv("PSQL_DB_NAME");

@@ -7,6 +7,7 @@ import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +28,20 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public Supplier find(int id) {
-        return null;
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id, supplier_name, supplier_description FROM supplier WHERE id = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            Supplier supplier = new Supplier(rs.getString(2), rs.getString(3));
+            supplier.setId(id);
+            return supplier;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading category with id: " + id, e);
+        }
     }
 
     @Override
