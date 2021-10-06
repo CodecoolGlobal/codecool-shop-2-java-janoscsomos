@@ -5,7 +5,7 @@ const checkoutButton = document.querySelector("button");
 
 
 function exportChange(e){
-    fetch(`exportChange?${e.target.id}=${e.target.value}`)
+    fetch(`checkout-change?${e.target.id}=${e.target.value}`)
 }
 
 
