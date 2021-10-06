@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ProductDaoJdbc implements ProductDao {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     public ProductDaoJdbc(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -48,13 +48,9 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public List<Product> getAll() {
+
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT products.id, products.product_name, products.price, products.currency, " +
-                    "products.product_description, category.category_name, category.department, category.category_description, " +
-                    "supplier.supplier_name, supplier.supplier_description" +
-                    "FROM products" +
-                    "FULL JOIN category ON category.id = products.category_id" +
-                    "FULL JOIN supplier ON supplier.id = products.supplier_id";
+            String sql = "SELECT products.id, products.product_name, products.price, products.currency, products.product_description, category.category_name, category.department, category.category_description, supplier.supplier_name, supplier.supplier_description FROM products FULL OUTER JOIN category ON category.id = products.category_id FULL OUTER JOIN supplier ON supplier.id = products.supplier_id;";
             ResultSet rs = conn.createStatement().executeQuery(sql);
             List<Product> result = new ArrayList<>();
             while (rs.next()) {
@@ -66,6 +62,7 @@ public class ProductDaoJdbc implements ProductDao {
             }
             return result;
         } catch (SQLException e) {
+
             throw new RuntimeException("Error while reading all products", e);
         }
     }

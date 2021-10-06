@@ -3,10 +3,15 @@ package com.codecool.shop.dao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.SupplierDaoJdbc;
+import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
+import com.codecool.shop.model.Supplier;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
+import java.util.List;
 
 
 public class DatabaseManager {
@@ -21,6 +26,13 @@ public class DatabaseManager {
         supplierDao = new SupplierDaoJdbc(dataSource);
     }
 
+    public ProductCategory findProductCategory(int id) { return productCategoryDao.find(id); }
+
+    public List<ProductCategory> allProductCategories() {return productCategoryDao.getAll(); }
+
+    public List<Product> allProducts() { return productDao.getAll(); }
+
+    public List<Supplier> allSuppliers() {return supplierDao.getAll();}
 
     public DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();

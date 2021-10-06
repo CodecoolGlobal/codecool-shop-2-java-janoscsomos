@@ -35,45 +35,31 @@ public class ProductController extends HttpServlet {
         //ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDaoMem);
 
         DatabaseManager databaseManager = new DatabaseManager();
-        DataSource dataSource = null;
         try {
-            dataSource = databaseManager.connect();
+            databaseManager.setup();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
 
-        ProductDao productDataStore = new ProductDaoJdbc(dataSource);
-        ProductCategoryDao productCategoryDataStore = new ProductCategoryDaoJdbc(dataSource);
-        SupplierDao supplierDataStore = new SupplierDaoJdbc(dataSource);
-        ProductServiceDB productServiceDB = new ProductServiceDB(productDataStore, productCategoryDataStore, supplierDataStore);
+
+
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         //context.setVariable("category", productService.getProductCategory(1));
-        context.setVariable("category", productServiceDB.getProductCategory(1));
+        context.setVariable("category", databaseManager.findProductCategory(1));
 
         //context.setVariable("products", productService.getAllProducts());
-        context.setVariable("products", productServiceDB.getAllProducts());
+        context.setVariable("products", databaseManager.allProducts());
 
         //context.setVariable("allCategory", productCategoryDataStore.getAll());
-        context.setVariable("allCategory", productCategoryDataStore.getAll());
+        context.setVariable("allCategory", databaseManager.allProductCategories());
 
         //context.setVariable("allSuppliers", supplierDaoMem.getAll());
-        context.setVariable("allSuppliers", supplierDataStore.getAll());
-        //Hashtable<String, Integer> cart = new Hashtable<>();
+        context.setVariable("allSuppliers", databaseManager.allSuppliers());
 
-        /*
-        ShoppingCart shoppingCart = new ShoppingCart();
-        req.getSession().setAttribute("cart", shoppingCart);
-         */
-
-        // Alternative setting of the template context
-        // Map<String, Object> params = new HashMap<>();
-        // params.put("category", productCategoryDataStore.find(1));
-        // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-        // context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());
     }
 }

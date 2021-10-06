@@ -29,7 +29,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
     @Override
     public ProductCategory find(int id) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT id, category_name, department, category_descritption FROM category WHERE id = ?";
+            String sql = "SELECT id, category_name, department, category_description FROM category WHERE id = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
@@ -40,7 +40,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             productCategory.setId(id);
             return productCategory;
         } catch (SQLException e) {
-            throw new RuntimeException("Error while reading author with id: " + id, e);
+            throw new RuntimeException("Error while reading category with id: " + id, e);
         }
     }
 
