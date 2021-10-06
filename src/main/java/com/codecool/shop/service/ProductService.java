@@ -21,22 +21,21 @@ public class ProductService{
 
     public ProductCategory getProductCategory(int categoryId){
         ProductCategory outputCategory = productCategoryDao.find(categoryId);
-        if (outputCategory != null)
-            return outputCategory;
-        else
-            throw new IllegalArgumentException("Non existent category with this ID!");
+        if (outputCategory != null) return outputCategory;
+        else throw new IllegalArgumentException("Non existent category with this Id!");
     }
 
     public List<Product> getProductsForSupplier(int supplierId){
         var supplier = supplierDao.find(supplierId);
-        return productDao.getBy(supplier);
+        List<Product> output = productDao.getBy(supplier);
+        if (output.size() > 0) return output;
+        else throw new IllegalArgumentException("Non existent supplier name!");
     }
 
     public List<Product> getProductsForCategory(int categoryId){
         var category = productCategoryDao.find(categoryId);
         List<Product> products = productDao.getBy(category);
-        if (products.size() > 0)
-            return productDao.getBy(category);
+        if (products.size() > 0) return products;
         else throw new IllegalArgumentException("No products by this category!");
     }
 

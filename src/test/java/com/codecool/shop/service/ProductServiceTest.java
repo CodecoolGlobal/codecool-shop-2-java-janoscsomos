@@ -45,6 +45,16 @@ class ProductServiceTest {
         productService = new ProductService(productDaoMem, categoryDaoMem, supplierDaoMem);
     }
 
+    @AfterEach
+    void tearDown() {
+        // Removing category from its DaoMem:
+        categoryDaoMem.getAll().clear();
+        // Remove product(s) from their from DaoMem:
+        productDaoMem.getAll().clear();
+        // Removing supplier from its DaoMem:
+        supplierDaoMem.getAll().clear();
+    }
+
     @Test
     void getProductCategory_returnsCategoryWithExistingId() {
         // Add mock category to category DAO:
@@ -102,7 +112,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void getProductsForSupplier_throwsIllegalArgumentExceptionWithNonExistentSupplier() {
+    void getProductsForSupplier_throwsNullPointerExceptionWithNonExistentSupplier() {
         // Adding mock item to the product Dao and set its supplier:
         Mockito.when(mockProduct.getSupplier()).thenReturn(mockSupplier);
         productDaoMem.add(mockProduct);
@@ -114,7 +124,7 @@ class ProductServiceTest {
     }
 
     @Test
-    void getProductsByName() {
+    void getProductsByName_returnsProductsWithCorrectName() {
         // Set first product's name and add it to memory:
         Mockito.when(mockProduct.getName()).thenReturn(nameToSearchFor + " boat");
         productDaoMem.add(mockProduct);
@@ -135,12 +145,32 @@ class ProductServiceTest {
     }
 
     @Test
-    void getProductByName() {
+    void getProductsByNameReturnsEmptyListWithNonExistentProductNameSearch() {
+        // Set expectation:
+        List<Product> expectation = new LinkedList<>();
+        // Add and set mock item:
+        Mockito.when(mockProduct.getName()).thenReturn(nameToSearchFor);
+        productDaoMem.add(mockProduct);
+        // Assert:
+        assertEquals(expectation, productService.getProductsByName("noneExistentName"));
+    }
+
+    @Test
+    void getProductByName_returnProductIfSearchedForExistingName() {
         // Set product name and add it to memory:
         Mockito.when(mockProduct.getName()).thenReturn(nameToSearchFor);
         productDaoMem.add(mockProduct);
         // Assert:
         assertEquals(mockProduct, productService.getProductByName(nameToSearchFor));
+    }
+
+    @Test
+    void getProductByNameReturnsNullWithNonExistentProductNameSearch() {
+        // Add and set mock item:
+        Mockito.when(mockProduct.getName()).thenReturn(nameToSearchFor);
+        productDaoMem.add(mockProduct);
+        // Assert:
+        assertNull(productService.getProductByName("noneExistentName"));
     }
 
     @Test
@@ -158,16 +188,6 @@ class ProductServiceTest {
         expected.add(mockProduct3);
         // Assert:
         assertEquals(expected, productService.getAllProducts());
-    }
-
-    @AfterEach
-    void tearDown() {
-        // Remove category from its DaoMem:
-        categoryDaoMem.getAll().clear();
-        // Remove product(s) from their from DaoMem:
-        productDaoMem.getAll().clear();
-        // Remove supplier from its DaoMem:
-        supplierDaoMem.getAll().clear();
     }
 
     @AfterAll
