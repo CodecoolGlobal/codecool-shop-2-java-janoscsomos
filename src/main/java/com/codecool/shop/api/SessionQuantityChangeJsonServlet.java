@@ -35,7 +35,7 @@ public class SessionQuantityChangeJsonServlet  extends HttpServlet {
         // Database usage -->
         DatabaseManager databaseManager = DataUtil.initDatabaseManager();
         Product currentItem = databaseManager.getProductByName(request.getParameter("item"));
-        System.out.println(currentItem);
+
         if (request.getParameter("relation").equals("add")) {
             currentItem.setAmount(currentItem.getAmount() + 1);
         } else {
