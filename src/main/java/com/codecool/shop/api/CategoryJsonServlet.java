@@ -1,6 +1,8 @@
 package com.codecool.shop.api;
 
+import com.codecool.shop.dao.DatabaseManager;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.DataUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.google.gson.Gson;
 import com.codecool.shop.dao.ProductCategoryDao;
@@ -33,6 +35,12 @@ public class CategoryJsonServlet  extends HttpServlet {
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
 
         String categoryId = request.getParameter("category");
-        out.println(gson.toJson(productService.getProductsForCategory(Integer.parseInt(categoryId))));
+
+        // Singleton usage -->
+        //out.println(gson.toJson(productService.getProductsForCategory(Integer.parseInt(categoryId))));
+
+        // Database usage -->
+        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+        out.println(gson.toJson(databaseManager.getProductsForCategory(Integer.parseInt(categoryId))));
     }
 }

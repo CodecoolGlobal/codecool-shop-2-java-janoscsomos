@@ -44,7 +44,12 @@ public class DatabaseManager {
         else throw new IllegalArgumentException("Non existent supplier name!");
     }
 
-
+    public List<Product> getProductsForCategory(int categoryId){
+        var category = productCategoryDao.find(categoryId);
+        List<Product> products = productDao.getBy(category);
+        if (products.size() > 0) return products;
+        else throw new IllegalArgumentException("No products by this category!");
+    }
 
     public DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
