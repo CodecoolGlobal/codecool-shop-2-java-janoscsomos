@@ -4,8 +4,14 @@ const requiredFields = document.querySelectorAll(".form-control");
 const checkoutButton = document.querySelector("button");
 
 
+function exportChange(e){
+    fetch(`exportChange?${e.target.id}=${e.target.value}`)
+}
+
+
 for (let field of requiredFields) {
     field.addEventListener("change", fieldHandler);
+    field.addEventListener("change",exportChange);
 }
 
 
