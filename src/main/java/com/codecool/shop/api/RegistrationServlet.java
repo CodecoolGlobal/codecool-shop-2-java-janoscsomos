@@ -21,11 +21,8 @@ public class RegistrationServlet extends javax.servlet.http.HttpServlet {
         User freshUser = new User(
                 request.getParameter("name"),
                 request.getParameter("email"),
-                request.getParameter("password")
+                DataUtil.hashPassword(request.getParameter("password"))
         );
         databaseManager.addNewUser(freshUser);
-        System.out.println(request.getParameter("name"));
-        System.out.println(request.getParameter("email"));
-        response.sendRedirect("/");
     }
 }

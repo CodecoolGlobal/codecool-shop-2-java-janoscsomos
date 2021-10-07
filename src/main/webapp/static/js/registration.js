@@ -18,11 +18,12 @@ function passwordMatching(){
 
 function sendRegisterData(){
     if (passwordMatching()) {
-    apiGet(`register?name=${userName.value}&email=${email.value}&password=${password.value}`)
-        .then(() => {return null;});
+    apiGet(
+        `register?name=${userName.value}&email=${ email.value}&password=${password.value}`
+    ).then(() => {return null;});
     window.location.href = "/";
     } else {
-        alert("Password does not match with Repeat Password !")
+        alert("Passwords does not match!");
     }
 }
 
