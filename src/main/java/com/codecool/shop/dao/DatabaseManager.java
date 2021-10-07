@@ -7,6 +7,8 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import org.postgresql.ds.PGSimpleDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import javax.sql.DataSource;
@@ -19,6 +21,7 @@ public class DatabaseManager {
     private ProductCategoryDao productCategoryDao;
     private ProductDao productDao;
     private SupplierDao supplierDao;
+    private static final Logger logger = LoggerFactory.getLogger(DatabaseManager.class);
 
     public void setup() throws SQLException {
         DataSource dataSource = connect();
@@ -66,9 +69,9 @@ public class DatabaseManager {
         dataSource.setUser(user);
         dataSource.setPassword(password);
 
-        System.out.println("Trying to connect");
+        logger.info("Trying to connect");
         dataSource.getConnection().close();
-        System.out.println("Connection ok.");
+        logger.info("Connection ok.");
 
         return dataSource;
     }

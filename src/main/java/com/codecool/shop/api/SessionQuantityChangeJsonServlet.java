@@ -11,6 +11,8 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +26,11 @@ import java.util.Map;
 
 @WebServlet(name = "SessionQuantityChangeJsonServlet", urlPatterns = "/api/session/quantity")
 public class SessionQuantityChangeJsonServlet  extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(SessionQuantityChangeJsonServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logger.info("{} request on route: /api/session/quantity", request.getMethod());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         ProductDao productDataStore = ProductDaoMem.getInstance();

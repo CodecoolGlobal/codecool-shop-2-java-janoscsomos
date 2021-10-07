@@ -30,9 +30,9 @@ public class ProductController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        logger.info("{} request on route: /", request.getMethod());
 
         DatabaseManager databaseManager = new DatabaseManager();
         if (DataUtil.getDatabaseConfig().equals("jdbc")) {
@@ -43,8 +43,8 @@ public class ProductController extends HttpServlet {
             }
         }
 
-        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-        WebContext context = new WebContext(req, resp, req.getServletContext());
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
+        WebContext context = new WebContext(request, response, request.getServletContext());
 
 
         if (DataUtil.getDatabaseConfig().equals("memory")) {
@@ -66,8 +66,6 @@ public class ProductController extends HttpServlet {
             context.setVariable("allSuppliers", databaseManager.allSuppliers());
         }
 
-        logger.info("Get request on main page.");
-
-        engine.process("product/index.html", context, resp.getWriter());
+        engine.process("product/index.html", context, response.getWriter());
     }
 }
