@@ -44,18 +44,6 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         }
     }
 
-/*
-    @Override
-    public void remove(int id) {
-        data.remove(find(id));
-    }
-
-    @Override
-    public List<ProductCategory> getAll() {
-        return data;
-    }
-
- */
 
     @Override
     public void remove(int id) {

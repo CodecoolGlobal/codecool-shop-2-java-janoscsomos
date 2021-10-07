@@ -30,8 +30,8 @@ CREATE TABLE public.products (
 );
 
 
-DROP TABLE IF EXISTS public.user CASCADE;
-CREATE TABLE public.user (
+DROP TABLE IF EXISTS public.users CASCADE;
+CREATE TABLE public.users (
     id serial NOT NULL PRIMARY KEY,
     name text,
     email varchar(100),
@@ -71,7 +71,7 @@ ALTER TABLE ONLY public.products
     ADD CONSTRAINT fk_supplier_id FOREIGN KEY (supplier_id) REFERENCES public.supplier(id);
 
 ALTER TABLE ONLY public.shopping_cart
-    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES public.user(id);
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 ALTER TABLE ONLY public.shopping_cart
     ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES public.products(id);

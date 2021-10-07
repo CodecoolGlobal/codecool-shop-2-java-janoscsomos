@@ -3,9 +3,11 @@ package com.codecool.shop.dao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.implementation.ProductDaoJdbc;
 import com.codecool.shop.dao.implementation.SupplierDaoJdbc;
+import com.codecool.shop.dao.implementation.UserDaoJdbc;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
+import com.codecool.shop.model.User;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,7 @@ public class DatabaseManager {
     private ProductCategoryDao productCategoryDao;
     private ProductDao productDao;
     private SupplierDao supplierDao;
+    private UserDao userDao;
     private static final Logger logger = LoggerFactory.getLogger(DatabaseManager.class);
 
     public void setup() throws SQLException {
@@ -28,17 +31,38 @@ public class DatabaseManager {
         productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
         productDao = new ProductDaoJdbc(dataSource);
         supplierDao = new SupplierDaoJdbc(dataSource);
+        userDao = new UserDaoJdbc(dataSource);
     }
 
-    public Product getProductByName(String name) { return productDao.getByOne(name); }
+    public User getUserByEmail(String email) {
+        return userDao.find(email);
+    }
 
-    public ProductCategory findProductCategory(int id) { return productCategoryDao.find(id); }
+    public void addNewUser(User user) {
+        userDao.add(user);
+    }
 
-    public List<ProductCategory> allProductCategories() {return productCategoryDao.getAll(); }
+    public String checkUser(String email) {return userDao.check(email);}
 
-    public List<Product> allProducts() { return productDao.getAll(); }
+    public Product getProductByName(String name) {
+        return productDao.getByOne(name);
+    }
 
-    public List<Supplier> allSuppliers() {return supplierDao.getAll();}
+    public ProductCategory findProductCategory(int id) {
+        return productCategoryDao.find(id);
+    }
+
+    public List<ProductCategory> allProductCategories() {
+        return productCategoryDao.getAll();
+    }
+
+    public List<Product> allProducts() {
+        return productDao.getAll();
+    }
+
+    public List<Supplier> allSuppliers() {
+        return supplierDao.getAll();
+    }
 
     public List<Product> getProductsForSupplier(int supplierId) {
         var supplier = supplierDao.find(supplierId);

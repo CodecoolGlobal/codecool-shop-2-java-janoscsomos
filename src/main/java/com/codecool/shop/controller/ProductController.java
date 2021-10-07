@@ -26,7 +26,7 @@ import java.sql.SQLException;
 public class ProductController extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
     }
 
     @Override
