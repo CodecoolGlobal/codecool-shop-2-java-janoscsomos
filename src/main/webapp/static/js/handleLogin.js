@@ -5,6 +5,9 @@ function changeContent() {
     document.querySelector("#name-input").innerHTML = "";
     document.querySelector("#second-password-input").innerHTML = "";
     document.querySelector("#login-link").textContent = "Registration";
+    document.querySelector("#login-link").addEventListener("click", () => {
+        window.location.href = "/registration-and-login";
+    })
     // Clone submit button to get rid of event listener
     const submitButton = document.querySelector("#submit-button")
     submitButton.textContent = "Login";
