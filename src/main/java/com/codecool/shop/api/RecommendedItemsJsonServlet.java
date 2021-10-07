@@ -1,8 +1,10 @@
 package com.codecool.shop.api;
 
+import com.codecool.shop.dao.DatabaseManager;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.DataUtil;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
@@ -44,9 +46,20 @@ public class RecommendedItemsJsonServlet extends HttpServlet {
             cart = new HashMap<>();
         HashMap<String, Integer> finalCart = cart;
         // Filter recommendations:
+
+        // Singleton usage -->
+        /*
         List<Product> output = productService.getAllProducts().stream().filter(
                 product -> !finalCart.containsKey(product.getName())
         ).collect(Collectors.toList());
+         */
+
+        // Database usage -->
+        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+        List<Product> output = databaseManager.allProducts().stream().filter(
+                product -> !finalCart.containsKey(product.getName())
+        ).collect(Collectors.toList());
+
         // Print output:
         out.println(gson.toJson(output));
     }

@@ -25,7 +25,5 @@ public class SessionAddJsonServlet extends HttpServlet {
             shoppingCart = (HashMap<String, Integer>) session.getAttribute("shoppingCart");
         }
         shoppingCart.put(request.getParameter("productName"), 1);
-
-
     }
 }

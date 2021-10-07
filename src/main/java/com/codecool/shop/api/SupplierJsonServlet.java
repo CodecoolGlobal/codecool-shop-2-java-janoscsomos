@@ -1,8 +1,10 @@
 package com.codecool.shop.api;
 
+import com.codecool.shop.dao.DatabaseManager;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.DataUtil;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
@@ -14,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -31,7 +34,14 @@ public class SupplierJsonServlet  extends HttpServlet {
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
         String supplierId = request.getParameter("supplier");
-        out.println(gson.toJson(productService.getProductsForSupplier(Integer.parseInt(supplierId))));
+
+        // Singleton usage -->
+        //out.println(gson.toJson(productService.getProductsForSupplier(Integer.parseInt(supplierId))));
+
+        // Database usage -->
+        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+        out.println(gson.toJson(databaseManager.getProductsForSupplier(Integer.parseInt(supplierId))));
+
     }
 }
 
