@@ -19,28 +19,37 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public void add(User user) {
+        try (Connection conn = dataSource.getConnection()) {
 
+            String sql = "INSERT INTO users VALUES (?. ?. ?)";
+
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, user.getName());
+            st.setString(2, user.getEmail());
+            st.setString(3, user.getPassword());
+            st.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while adding user \"" + user.getName() + "\". Error type: ", e);
+        }
     }
 
     @Override
-    public User find(String email, String password) {
+    public User find(String email) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT id, name, email, password FROM users WHERE email = ? AND password = ?";
+
+            String sql = "SELECT id, name, email, password FROM users WHERE email = ?";
+
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, email);
-            st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
                 return null;
             }
-            User user = new User(
-                    rs.getInt(1),
+            return new User(
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4)
             );
-            user.setId(rs.getInt(1));
-            return user;
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading user with email \"" + email + "\". Error type: ", e);
         }

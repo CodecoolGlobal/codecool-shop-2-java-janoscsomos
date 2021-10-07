@@ -1,13 +1,15 @@
+import {apiGet} from "./fetcher.js";
 
-const email = document.getElementById("email");
-const password = document.getElementById("psw");
-const repeatPassword = document.getElementById("psw-repeat");
+const email = document.querySelector("#user-email");
+const userName = document.querySelector("#user-name")
+const password = document.querySelector("#user-password-1");
+const repeatPassword = document.querySelector("#user-password-2");
 
 register();
 
 function register(){
-    const submit = document.querySelector(".register");
-    submit.addEventListener("click",sendRegisterData);
+    const submit = document.querySelector("#submit-button");
+    submit.addEventListener("click", sendRegisterData);
 }
 
 function passwordMatching(){
@@ -15,9 +17,11 @@ function passwordMatching(){
 }
 
 function sendRegisterData(){
-    if (passwordMatching()){
-    fetch(`save-registration?email=${email.value}&password=${password.value}`,{method:'GET'});}
-    else {
+    if (passwordMatching()) {
+    apiGet(`register?name=${userName.value}&email=${email.value}&password=${password.value}`)
+        .then(() => {return null;});
+    window.location.href = "/";
+    } else {
         alert("Password does not match with Repeat Password !")
     }
 }
