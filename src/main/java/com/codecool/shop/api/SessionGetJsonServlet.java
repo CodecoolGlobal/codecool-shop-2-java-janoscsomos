@@ -60,10 +60,11 @@ public class SessionGetJsonServlet  extends HttpServlet {
          */ // Database usage -->
         DatabaseManager databaseManager = DataUtil.initDatabaseManager();
         for (String product : cart.keySet()) {
-            output.add(databaseManager.getProductByName(product));
+            Product currentProduct = databaseManager.getProductByName(product);
+            int currentAmount = cart.get(product);
+            currentProduct.setAmount(currentAmount);
+            output.add(currentProduct);
         }
-
-
         out.println(gson.toJson(output));
     }
 }

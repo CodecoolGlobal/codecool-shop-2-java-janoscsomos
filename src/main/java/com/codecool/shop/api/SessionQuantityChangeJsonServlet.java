@@ -16,7 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @WebServlet(name = "SessionQuantityChangeJsonServlet", urlPatterns = "/api/session/quantity")
@@ -35,12 +38,29 @@ public class SessionQuantityChangeJsonServlet  extends HttpServlet {
         // Database usage -->
         DatabaseManager databaseManager = DataUtil.initDatabaseManager();
         Product currentItem = databaseManager.getProductByName(request.getParameter("item"));
+        Map<String, Integer> shoppingCart;
+        HttpSession session = request.getSession();
+        shoppingCart = (HashMap<String, Integer>) session.getAttribute("shoppingCart");
+        Integer currentAmount = shoppingCart.get(currentItem.getName());
+
 
         if (request.getParameter("relation").equals("add")) {
-            currentItem.setAmount(currentItem.getAmount() + 1);
+            // Singleton usage -->
+            //currentItem.setAmount(currentItem.getAmount() + 1);
+
+            // Database usage -->
+            shoppingCart.put(currentItem.getName(), currentAmount + 1);
+
         } else {
+            /* Singleton usage -->
             if (currentItem.getAmount() > 1) {
                 currentItem.setAmount(currentItem.getAmount() - 1);
+            }
+             */
+
+            if (currentAmount > 1) {
+                // Database usage -->
+                shoppingCart.put(currentItem.getName(), currentAmount - 1);
             }
         }
     }
