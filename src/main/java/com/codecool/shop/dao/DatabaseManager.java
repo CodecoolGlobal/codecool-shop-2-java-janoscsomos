@@ -39,6 +39,8 @@ public class DatabaseManager {
         userDao.add(user);
     }
 
+    public String checkUser(String email) {return userDao.check(email);}
+
     public Product getProductByName(String name) {
         return productDao.getByOne(name);
     }

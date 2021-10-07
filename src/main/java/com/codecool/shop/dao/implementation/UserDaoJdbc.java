@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.User;
 
 import javax.sql.DataSource;
@@ -33,9 +34,7 @@ public class UserDaoJdbc implements UserDao {
     @Override
     public User find(String email) {
         try (Connection conn = dataSource.getConnection()) {
-
             String sql = "SELECT id, name, email, password FROM users WHERE email = ?";
-
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
@@ -49,6 +48,22 @@ public class UserDaoJdbc implements UserDao {
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error while reading user with email \"" + email + "\". Error type: ", e);
+        }
+    }
+
+    @Override
+    public String check(String email) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT password FROM user WHERE email = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()) {
+                return null;
+            }
+            return rs.getString(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error while reading category with id: ", e);
         }
     }
 }
