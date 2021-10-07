@@ -2,6 +2,8 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.DatabaseManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -15,6 +17,7 @@ import java.sql.SQLException;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
@@ -48,6 +51,8 @@ public class ProductController extends HttpServlet {
 
         //context.setVariable("allSuppliers", supplierDaoMem.getAll());
         context.setVariable("allSuppliers", databaseManager.allSuppliers());
+
+        logger.info("Get request on main page.");
 
         engine.process("product/index.html", context, resp.getWriter());
     }
