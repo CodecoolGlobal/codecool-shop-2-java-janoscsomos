@@ -13,6 +13,5 @@ public class RegistrationServlet extends javax.servlet.http.HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println(request.getParameter("email"));
-
     }
 }
