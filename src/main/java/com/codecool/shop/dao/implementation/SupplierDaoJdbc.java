@@ -23,7 +23,6 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-
     }
 
     @Override
