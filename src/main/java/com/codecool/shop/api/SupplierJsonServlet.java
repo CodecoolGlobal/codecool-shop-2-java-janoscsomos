@@ -35,12 +35,14 @@ public class SupplierJsonServlet  extends HttpServlet {
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
         String supplierId = request.getParameter("supplier");
 
-        // Singleton usage -->
-        //out.println(gson.toJson(productService.getProductsForSupplier(Integer.parseInt(supplierId))));
+        if (DataUtil.getDatabaseConfig().equals("memory")) {
+            out.println(gson.toJson(productService.getProductsForSupplier(Integer.parseInt(supplierId))));
+        }
 
-        // Database usage -->
-        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        out.println(gson.toJson(databaseManager.getProductsForSupplier(Integer.parseInt(supplierId))));
+        if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+            DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+            out.println(gson.toJson(databaseManager.getProductsForSupplier(Integer.parseInt(supplierId))));
+        }
 
     }
 }

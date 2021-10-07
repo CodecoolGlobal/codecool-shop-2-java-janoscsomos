@@ -34,12 +34,14 @@ public class NameSearchJsonServlet  extends HttpServlet {
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
         String namePart = request.getParameter("name");
 
-        // Singleton usage -->
-        //out.println(gson.toJson(productService.getProductsByName(namePart)));
+        if (DataUtil.getDatabaseConfig().equals("memory")) {
+            out.println(gson.toJson(productService.getProductsByName(namePart)));
+        }
 
-        // Database usage -->
-        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        out.println(gson.toJson(databaseManager.getProductsByName(namePart)));
+        if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+            DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+            out.println(gson.toJson(databaseManager.getProductsByName(namePart)));
+        }
     }
 }
 

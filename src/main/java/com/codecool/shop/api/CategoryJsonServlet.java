@@ -16,8 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 
 
 @WebServlet(name = "CategoryJsonServlet", urlPatterns = "/api/category")
@@ -36,11 +38,15 @@ public class CategoryJsonServlet  extends HttpServlet {
 
         String categoryId = request.getParameter("category");
 
-        // Singleton usage -->
-        //out.println(gson.toJson(productService.getProductsForCategory(Integer.parseInt(categoryId))));
 
-        // Database usage -->
-        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        out.println(gson.toJson(databaseManager.getProductsForCategory(Integer.parseInt(categoryId))));
+
+        if (DataUtil.getDatabaseConfig().equals("memory")) {
+            out.println(gson.toJson(productService.getProductsForCategory(Integer.parseInt(categoryId))));
+        }
+
+        if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+            DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+            out.println(gson.toJson(databaseManager.getProductsForCategory(Integer.parseInt(categoryId))));
+        }
     }
 }

@@ -32,35 +32,43 @@ public class SessionQuantityChangeJsonServlet  extends HttpServlet {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
-        // Singleton usage -->
-        //Product currentItem = productService.getProductByName(request.getParameter("item"));
+        Product currentItem = null;
+        Integer currentAmount = 0;
+        Map<String, Integer> shoppingCart = null;
 
-        // Database usage -->
-        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        Product currentItem = databaseManager.getProductByName(request.getParameter("item"));
-        Map<String, Integer> shoppingCart;
-        HttpSession session = request.getSession();
-        shoppingCart = (HashMap<String, Integer>) session.getAttribute("shoppingCart");
-        Integer currentAmount = shoppingCart.get(currentItem.getName());
+        if (DataUtil.getDatabaseConfig().equals("memory")) {
+            currentItem = productService.getProductByName(request.getParameter("item"));
+        }
+
+        if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+            DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+            currentItem = databaseManager.getProductByName(request.getParameter("item"));
+            HttpSession session = request.getSession();
+            shoppingCart = (HashMap<String, Integer>) session.getAttribute("shoppingCart");
+            currentAmount = shoppingCart.get(currentItem.getName());
+        }
 
 
         if (request.getParameter("relation").equals("add")) {
-            // Singleton usage -->
-            //currentItem.setAmount(currentItem.getAmount() + 1);
+            if (DataUtil.getDatabaseConfig().equals("memory")) {
+                currentItem.setAmount(currentItem.getAmount() + 1);
+            }
 
-            // Database usage -->
-            shoppingCart.put(currentItem.getName(), currentAmount + 1);
+            if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+                shoppingCart.put(currentItem.getName(), currentAmount + 1);
+            }
 
         } else {
-            /* Singleton usage -->
-            if (currentItem.getAmount() > 1) {
-                currentItem.setAmount(currentItem.getAmount() - 1);
+            if (DataUtil.getDatabaseConfig().equals("memory")) {
+                if (currentItem.getAmount() > 1) {
+                    currentItem.setAmount(currentItem.getAmount() - 1);
+                }
             }
-             */
 
             if (currentAmount > 1) {
-                // Database usage -->
-                shoppingCart.put(currentItem.getName(), currentAmount - 1);
+                if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+                    shoppingCart.put(currentItem.getName(), currentAmount - 1);
+                }
             }
         }
     }
