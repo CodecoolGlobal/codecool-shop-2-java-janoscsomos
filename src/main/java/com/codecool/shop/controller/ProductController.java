@@ -66,6 +66,8 @@ public class ProductController extends HttpServlet {
             context.setVariable("allSuppliers", databaseManager.allSuppliers());
         }
 
+        context.setVariable("dao", DataUtil.getDatabaseConfig());
+
         engine.process("product/index.html", context, response.getWriter());
     }
 }
