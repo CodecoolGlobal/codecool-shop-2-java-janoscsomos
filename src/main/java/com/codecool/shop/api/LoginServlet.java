@@ -11,6 +11,8 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.User;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,11 +24,13 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(LoginServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        logger.info("{} request on route: /api/login", request.getMethod());
         DatabaseManager databaseManager = DataUtil.initDatabaseManager();
         String hashedPassword = databaseManager.checkUser(request.getParameter("email"));
         System.out.println(hashedPassword);
