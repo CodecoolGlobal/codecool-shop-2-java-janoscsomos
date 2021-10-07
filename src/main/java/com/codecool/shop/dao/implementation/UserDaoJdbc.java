@@ -54,7 +54,7 @@ public class UserDaoJdbc implements UserDao {
     @Override
     public String check(String email) {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = "SELECT password FROM user WHERE email = ?";
+            String sql = "SELECT password FROM users WHERE email = ?";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, email);
             ResultSet rs = st.executeQuery();

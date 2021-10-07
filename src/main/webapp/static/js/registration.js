@@ -1,5 +1,7 @@
 import {apiGet} from "./fetcher.js";
 
+export function registerListener() {sendRegisterData();}
+
 const email = document.querySelector("#user-email");
 const userName = document.querySelector("#user-name")
 const password = document.querySelector("#user-password-1");

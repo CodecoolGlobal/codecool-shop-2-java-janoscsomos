@@ -4,20 +4,19 @@ function changeContent() {
     document.querySelector("#main-title").textContent = "Login";
     document.querySelector("#name-input").innerHTML = "";
     document.querySelector("#second-password-input").innerHTML = "";
-    document.replaceChild(
-        `<a href="/registration">Registration</a>`,
-        document.querySelector("#login-link")
-    );
+    document.querySelector("#login-link").textContent = "Registration";
 
     const submitButton = document.querySelector("#submit-button")
     submitButton.textContent = "Login";
-    submitButton.addEventListener("click", sendLoginRequest);
-
-    function sendLoginRequest() {
+    const newSubmitButton = submitButton.cloneNode(true);
+    newSubmitButton.addEventListener("click", (e) => {
         apiGet(`/api/login?email=${document.querySelector("#user-email").value}&password=${
             document.querySelector("#user-password-1").value
         }`).then(() => {return null;});
-    }
+    });
+    let buttonContainer = document.querySelector("#button-container");
+    buttonContainer.innerHTML = "";
+    buttonContainer.appendChild(newSubmitButton);
 }
 
 function login() {
