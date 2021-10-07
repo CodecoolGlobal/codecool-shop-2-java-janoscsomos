@@ -2,9 +2,9 @@ package com.codecool.shop.model;
 
 public class User {
     private int id;
-    private String name;
-    private String email;
-    private String password;
+    private final String name;
+    private final String email;
+    private final String password;
 
     public User(int id, String name, String email, String password) {
         this.id = id;
@@ -15,5 +15,21 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
