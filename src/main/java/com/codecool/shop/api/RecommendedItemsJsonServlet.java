@@ -18,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,20 +47,21 @@ public class RecommendedItemsJsonServlet extends HttpServlet {
         if (cart == null)
             cart = new HashMap<>();
         HashMap<String, Integer> finalCart = cart;
+
         // Filter recommendations:
+        List<Product> output = new ArrayList<>();
+        if (DataUtil.getDatabaseConfig().equals("memory")) {
+            output = productService.getAllProducts().stream().filter(
+                    product -> !finalCart.containsKey(product.getName())
+            ).collect(Collectors.toList());
+        }
 
-        // Singleton usage -->
-        /*
-        List<Product> output = productService.getAllProducts().stream().filter(
-                product -> !finalCart.containsKey(product.getName())
-        ).collect(Collectors.toList());
-         */
-
-        // Database usage -->
-        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        List<Product> output = databaseManager.allProducts().stream().filter(
-                product -> !finalCart.containsKey(product.getName())
-        ).collect(Collectors.toList());
+        if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+            DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+            output = databaseManager.allProducts().stream().filter(
+                    product -> !finalCart.containsKey(product.getName())
+            ).collect(Collectors.toList());
+        }
 
         // Print output:
         out.println(gson.toJson(output));

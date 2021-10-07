@@ -36,22 +36,33 @@ public class SessionRemoveJsonServlet  extends HttpServlet {
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
         HashMap<String, Integer> cart = (HashMap<String, Integer>) request.getSession().getAttribute("shoppingCart");
-        // Singleton usage -->
-        //Product currentProduct = productService.getProductByName(request.getParameter("item"));
 
-        // Database usage -->
-        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        Product currentProduct = databaseManager.getProductByName(request.getParameter("item"));
-        currentProduct.setAmount(1);
+
+
+        if (DataUtil.getDatabaseConfig().equals("memory")) {
+            Product currentProduct = productService.getProductByName(request.getParameter("item"));
+            currentProduct.setAmount(1);
+        }
+
+
+        if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+            DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+            Product currentProduct = databaseManager.getProductByName(request.getParameter("item"));
+        }
+
+
         cart.remove(request.getParameter("item"));
         List<Product> output = new LinkedList<>();
         for (String product : cart.keySet()) {
 
-            // Singleton usage -->
-            //output.add(productService.getProductByName(product));
+            if (DataUtil.getDatabaseConfig().equals("memory")) {
+                output.add(productService.getProductByName(product));
+            }
 
-            // Database usage -->
-            output.add(databaseManager.getProductByName(product));
+            if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+                DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+                output.add(databaseManager.getProductByName(product));
+            }
         }
         out.println(gson.toJson(output));
     }
