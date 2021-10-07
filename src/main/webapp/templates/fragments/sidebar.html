@@ -37,11 +37,14 @@
             </ul>
         </li>
         <hr>
-        <li>
+        <li th:if="${dao == 'jdbc'}">
             <a href="/registration-and-login">Registration</a>
         </li>
-        <li>
+        <li th:if="${dao == 'jdbc'}">
             <a href="/registration-and-login?state=login">Login</a>
+        </li>
+        <li th:if="${dao == 'memory'}">
+            <p>No registration is possible currently!</p>
         </li>
         <hr>
         <li>

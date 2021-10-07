@@ -1,5 +1,6 @@
 package com.codecool.shop.api;
 
+import com.codecool.shop.IO.LogIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,4 +1,4 @@
-package com.codecool.shop.api;
+package com.codecool.shop.IO;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
