@@ -11,6 +11,8 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,12 +26,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet(name = "RecommendedItemsJsonServlet", urlPatterns = "api/session/recommend")
+@WebServlet(name = "RecommendedItemsJsonServlet", urlPatterns = "/api/session/recommend")
 public class RecommendedItemsJsonServlet extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(RecommendedItemsJsonServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException {
+        logger.info("{} request on route: /api/session/recommend", request.getMethod());
         // Init:
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

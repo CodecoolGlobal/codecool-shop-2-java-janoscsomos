@@ -33,6 +33,7 @@ public class SessionGetJsonServlet  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        logger.info("{} request on route: /api/session/get", request.getMethod());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();

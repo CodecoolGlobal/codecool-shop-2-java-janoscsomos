@@ -11,6 +11,8 @@ import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +27,11 @@ import java.util.List;
 
 @WebServlet(name = "SessionRemoveJsonServlet", urlPatterns = "/api/session/remove")
 public class SessionRemoveJsonServlet  extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(SessionRemoveJsonServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logger.info("{} request on route: /api/session/remove", request.getMethod());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();

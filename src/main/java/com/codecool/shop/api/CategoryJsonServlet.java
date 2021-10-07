@@ -1,5 +1,6 @@
 package com.codecool.shop.api;
 
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.DatabaseManager;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.DataUtil;
@@ -10,6 +11,8 @@ import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,9 +27,12 @@ import java.util.Properties;
 
 @WebServlet(name = "CategoryJsonServlet", urlPatterns = "/api/category")
 public class CategoryJsonServlet  extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(CategoryJsonServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        logger.info("{} request on route: /api/category", request.getMethod());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();

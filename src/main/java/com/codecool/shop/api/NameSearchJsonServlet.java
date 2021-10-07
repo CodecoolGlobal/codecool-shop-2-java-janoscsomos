@@ -10,6 +10,8 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,8 +24,11 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "NameSearchJsonServlet", urlPatterns = "/api/search_name")
 public class NameSearchJsonServlet  extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(NameSearchJsonServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("{} request on route: /api/search_name", request.getMethod());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
