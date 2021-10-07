@@ -4,10 +4,7 @@ import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.User;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDaoJdbc implements UserDao {
 
@@ -21,13 +18,13 @@ public class UserDaoJdbc implements UserDao {
     public void add(User user) {
         try (Connection conn = dataSource.getConnection()) {
 
-            String sql = "INSERT INTO users VALUES (?. ?. ?)";
+            String sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
 
-            PreparedStatement st = conn.prepareStatement(sql);
+            PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             st.setString(1, user.getName());
             st.setString(2, user.getEmail());
             st.setString(3, user.getPassword());
-            st.executeQuery();
+            st.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error while adding user \"" + user.getName() + "\". Error type: ", e);
         }

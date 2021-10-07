@@ -3,6 +3,7 @@ package com.codecool.shop.api;
 
 import com.codecool.shop.dao.DatabaseManager;
 import com.codecool.shop.dao.implementation.DataUtil;
+import com.codecool.shop.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,9 @@ public class RegistrationServlet extends javax.servlet.http.HttpServlet {
             throws ServletException, IOException {
         DatabaseManager databaseManager = DataUtil.initDatabaseManager();
         User freshUser = new User(
-
+                request.getParameter("name"),
+                request.getParameter("email"),
+                request.getParameter("password")
         );
         databaseManager.addNewUser(freshUser);
         System.out.println(request.getParameter("name"));
