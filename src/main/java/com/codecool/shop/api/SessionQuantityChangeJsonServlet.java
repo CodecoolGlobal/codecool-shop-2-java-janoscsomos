@@ -11,6 +11,8 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,43 +26,54 @@ import java.util.Map;
 
 @WebServlet(name = "SessionQuantityChangeJsonServlet", urlPatterns = "/api/session/quantity")
 public class SessionQuantityChangeJsonServlet  extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(SessionQuantityChangeJsonServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logger.info("{} request on route: /api/session/quantity", request.getMethod());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao = SupplierDaoMem.getInstance();
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
-        // Singleton usage -->
-        //Product currentItem = productService.getProductByName(request.getParameter("item"));
+        Product currentItem = null;
+        Integer currentAmount = 0;
+        Map<String, Integer> shoppingCart = null;
 
-        // Database usage -->
-        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        Product currentItem = databaseManager.getProductByName(request.getParameter("item"));
-        Map<String, Integer> shoppingCart;
-        HttpSession session = request.getSession();
-        shoppingCart = (HashMap<String, Integer>) session.getAttribute("shoppingCart");
-        Integer currentAmount = shoppingCart.get(currentItem.getName());
+        if (DataUtil.getDatabaseConfig().equals("memory")) {
+            currentItem = productService.getProductByName(request.getParameter("item"));
+        }
+
+        if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+            DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+            currentItem = databaseManager.getProductByName(request.getParameter("item"));
+            HttpSession session = request.getSession();
+            shoppingCart = (HashMap<String, Integer>) session.getAttribute("shoppingCart");
+            currentAmount = shoppingCart.get(currentItem.getName());
+        }
 
 
         if (request.getParameter("relation").equals("add")) {
-            // Singleton usage -->
-            //currentItem.setAmount(currentItem.getAmount() + 1);
+            if (DataUtil.getDatabaseConfig().equals("memory")) {
+                currentItem.setAmount(currentItem.getAmount() + 1);
+            }
 
-            // Database usage -->
-            shoppingCart.put(currentItem.getName(), currentAmount + 1);
+            if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+                shoppingCart.put(currentItem.getName(), currentAmount + 1);
+            }
 
         } else {
-            /* Singleton usage -->
-            if (currentItem.getAmount() > 1) {
-                currentItem.setAmount(currentItem.getAmount() - 1);
+            if (DataUtil.getDatabaseConfig().equals("memory")) {
+                if (currentItem.getAmount() > 1) {
+                    currentItem.setAmount(currentItem.getAmount() - 1);
+                }
             }
-             */
 
             if (currentAmount > 1) {
-                // Database usage -->
-                shoppingCart.put(currentItem.getName(), currentAmount - 1);
+                if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+                    shoppingCart.put(currentItem.getName(), currentAmount - 1);
+                }
             }
         }
     }

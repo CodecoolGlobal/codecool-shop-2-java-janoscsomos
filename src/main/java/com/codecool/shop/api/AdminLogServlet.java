@@ -18,6 +18,7 @@ public class AdminLogServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String payload = request.getParameter("logoutput");
+        logger.info("{} request on route: /api/adminlog", request.getMethod());
         try {
             logIO.exportLog(payload);
         } catch (ClassNotFoundException e) {

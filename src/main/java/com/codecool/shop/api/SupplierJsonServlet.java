@@ -10,6 +10,8 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
 import com.codecool.shop.service.ProductService;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,8 +25,11 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "SupplierJsonServlet", urlPatterns = "/api/supplier")
 public class SupplierJsonServlet  extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(SupplierJsonServlet.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        logger.info("{} request on route: /api/supplier", request.getMethod());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
@@ -35,12 +40,14 @@ public class SupplierJsonServlet  extends HttpServlet {
         ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
         String supplierId = request.getParameter("supplier");
 
-        // Singleton usage -->
-        //out.println(gson.toJson(productService.getProductsForSupplier(Integer.parseInt(supplierId))));
+        if (DataUtil.getDatabaseConfig().equals("memory")) {
+            out.println(gson.toJson(productService.getProductsForSupplier(Integer.parseInt(supplierId))));
+        }
 
-        // Database usage -->
-        DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        out.println(gson.toJson(databaseManager.getProductsForSupplier(Integer.parseInt(supplierId))));
+        if (DataUtil.getDatabaseConfig().equals("jdbc")) {
+            DatabaseManager databaseManager = DataUtil.initDatabaseManager();
+            out.println(gson.toJson(databaseManager.getProductsForSupplier(Integer.parseInt(supplierId))));
+        }
 
     }
 }
