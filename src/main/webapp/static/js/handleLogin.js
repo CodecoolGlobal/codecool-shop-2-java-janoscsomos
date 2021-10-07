@@ -24,9 +24,13 @@ function changeContent() {
     buttonContainer.appendChild(newSubmitButton);
 }
 
-function login() {
+async function login() {
     const loginButton = document.querySelector("#login-link");
-    loginButton.addEventListener("click", changeContent);
+    await loginButton.addEventListener("click", changeContent);
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("state") === "login") {
+        changeContent();
+    }
 }
 
 login();
