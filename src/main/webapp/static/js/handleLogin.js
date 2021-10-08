@@ -14,9 +14,16 @@ function changeContent() {
     const newSubmitButton = submitButton.cloneNode(true);
     // Define new event listener:
     newSubmitButton.addEventListener("click", (e) => {
-        apiGet(`/api/login?email=${document.querySelector("#user-email").value}&password=${
-            document.querySelector("#user-password-1").value
-        }`).then(() => {return null;});
+        let userEmail = document.querySelector("#user-email").value;
+        let userPassword = document.querySelector("#user-password-1").value;
+        let data = {email: userEmail, password: userPassword}
+        /*apiGet(`/api/login?email=${}&password=${
+            
+        }`).then(() => {return null;});*/
+        fetch("/api/login", {
+            method: 'POST',
+            body: JSON.stringify(data),
+        }).then((response) => console.log(response));
     });
     // Change the buttons:
     let buttonContainer = document.querySelector("#button-container");

@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -27,14 +28,19 @@ public class LoginServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(LoginServlet.class);
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //super.doPost(req, resp);
 
         logger.info("{} request on route: /api/login", request.getMethod());
         DatabaseManager databaseManager = DataUtil.initDatabaseManager();
-        String hashedPassword = databaseManager.checkUser(request.getParameter("email"));
-        System.out.println(hashedPassword);
-        System.out.println(DataUtil.verifyPassword(request.getParameter("password"), hashedPassword));
+        BufferedReader bufferedReader = request.getReader();
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            System.out.println(line);
+        }
+        //String hashedPassword = databaseManager.checkUser(request.getParameter("email"));
+        //System.out.println(hashedPassword);
+        //System.out.println(DataUtil.verifyPassword(request.getParameter("password"), hashedPassword));
     }
 }
 
